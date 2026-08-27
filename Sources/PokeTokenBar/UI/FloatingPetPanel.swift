@@ -104,6 +104,7 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
             _ = store.limitDisplayMode   // hover 툴팁 %가 파생되는 값 — 수동 관찰 표면은 파생 원천을 직접 추적(defect-log §표시·UI)
             _ = store.floatingPetSwims   // toggling swim, or switching kingdom, re-evaluates wandering
             _ = companion.activeKingdom
+            _ = companion.representativeSubject  // hatch/graduate flips swim eligibility (egg ⇄ fish)
             _ = companion.language
         } onChange: { [weak self] in
             Task { @MainActor in
@@ -207,6 +208,7 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
     private func swimGatingActive() -> Bool {
         store.floatingPetEnabled && displayAwake && store.floatingPetSwims
             && companion.activeKingdom == .fish
+            && companion.hasActive          // an egg/roe stays put — only a HATCHED fish swims
             && store.currentBubbleAlert == nil
             && !ProcessInfo.processInfo.isLowPowerModeEnabled
     }
