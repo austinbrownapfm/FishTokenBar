@@ -677,8 +677,10 @@ struct CompanionState: Codable, Sendable {
         let snapshot = snapshotWorkingSet(as: activeKingdom)
         parked.removeAll { $0.kingdom == activeKingdom }
         parked.append(snapshot)
-        if let idx = parked.firstIndex(where: { $0.kingdom == target }) {
-            let restored = parked.remove(at: idx)
+        if let restored = parked.first(where: { $0.kingdom == target }) {
+            // removeAll (not remove(at:)) so a pre-corrupt save with duplicate target entries
+            // can't leave a stale duplicate behind.
+            parked.removeAll { $0.kingdom == target }
             restoreWorkingSet(from: restored)
         } else {
             resetWorkingSetForFreshKingdom()

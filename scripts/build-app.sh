@@ -29,7 +29,9 @@ RES_BUNDLE=".build/release/${PRODUCT_NAME}_${PRODUCT_NAME}.bundle"
 if [ -d "$RES_BUNDLE" ]; then
     cp -R "$RES_BUNDLE" "$APP/Contents/Resources/"
 else
-    echo "   ⚠︎ resource bundle not found at $RES_BUNDLE — Fish sprites will be missing" >&2
+    # Fail hard — shipping without it produces a fish-less app (every fish shows the 🥚 glyph).
+    echo "   ✗ resource bundle not found at $RES_BUNDLE — refusing to ship a Fish-less app." >&2
+    exit 1
 fi
 
 cat > "$APP/Contents/Info.plist" <<PLIST
