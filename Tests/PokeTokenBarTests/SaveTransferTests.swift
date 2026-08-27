@@ -716,7 +716,7 @@ final class SaveTransferTests: XCTestCase {
     func testSuggestedFileNameCarriesDate() {
         // 2026-08-03 12:00 UTC — 정오라 표준시대가 달라도 날짜 경계를 넘지 않는다(파일명은 로컬 날짜).
         let name = SaveTransfer.suggestedFileName(date: Date(timeIntervalSince1970: 1_785_758_400))
-        XCTAssertTrue(name.hasPrefix("PokeTokenBar-Save-"))
+        XCTAssertTrue(name.hasPrefix("FishTokenBar-Save-"))
         XCTAssertTrue(name.hasSuffix(".json"))
         XCTAssertTrue(name.contains("2026-08-03"), "실제 이름: \(name)")
     }
