@@ -1,5 +1,15 @@
 import AppKit
+import Observation
 import SwiftUI
+
+/// Live swim state the floating pet's SwiftUI view observes. The controller drives `facingLeft`
+/// as the fish wanders so the sprite mirrors to face its travel direction (fish are authored
+/// facing right). Kept tiny + separate so per-frame updates don't rebuild the whole pet view.
+@MainActor
+@Observable
+final class FloatingPetMotion {
+    var facingLeft = false
+}
 
 /// 데스크톱 위에 떠 있는 컴패니언 포켓몬 오버레이(옵트인, 설정 → 플로팅 펫).
 /// - 드래그: 커스텀 `mouseDragged` (클릭과 충돌하지 않음).
@@ -16,6 +26,17 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
     private var displayAwake = true
     private var builtAnimated: Bool?
     private var powerObserver: NSObjectProtocol?
+
+    // MARK: Swimming (Fish mode) — the pet wanders the current display.
+    let motion = FloatingPetMotion()
+    private var swimTimer: Timer?
+    private var swimTarget: NSPoint?
+    /// True only during a programmatic swim move, so `windowDidMove` skips persisting the origin
+    /// (otherwise the wander would overwrite the user's drag-chosen home at frame rate).
+    private var isWandering = false
+    /// ~20fps glide; tolerance coalesces wakeups (battery discipline, like the menu/GIF paths).
+    private static let swimInterval: TimeInterval = 1.0 / 20.0
+    private static let swimSpeed: CGFloat = 52   // pt/sec — a relaxed cruise
 
     private static let originXKey = "floatingPetOriginX"
     private static let originYKey = "floatingPetOriginY"
@@ -81,6 +102,8 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
             _ = store.todayTotalTokens
             _ = store.highestLimitUtilization
             _ = store.limitDisplayMode   // hover 툴팁 %가 파생되는 값 — 수동 관찰 표면은 파생 원천을 직접 추적(defect-log §표시·UI)
+            _ = store.floatingPetSwims   // toggling swim, or switching kingdom, re-evaluates wandering
+            _ = companion.activeKingdom
             _ = companion.language
         } onChange: { [weak self] in
             Task { @MainActor in
@@ -174,6 +197,81 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
     private func sync() {
         guard store.floatingPetEnabled, displayAwake else { hide(); return }
         show()
+        updateSwimming()
+    }
+
+    // MARK: Swimming
+
+    /// Swimming is a Fish-mode behavior: the pet is enabled, the display is awake, the swim toggle
+    /// is on, we're in Fish mode, not in low-power, and no priority speech bubble is showing.
+    private func swimGatingActive() -> Bool {
+        store.floatingPetEnabled && displayAwake && store.floatingPetSwims
+            && companion.activeKingdom == .fish
+            && store.currentBubbleAlert == nil
+            && !ProcessInfo.processInfo.isLowPowerModeEnabled
+    }
+
+    private func updateSwimming() {
+        if swimGatingActive() { startSwimming() } else { stopSwimming() }
+    }
+
+    private func startSwimming() {
+        guard swimTimer == nil else { return }
+        let t = Timer(timeInterval: Self.swimInterval, repeats: true) { [weak self] _ in
+            MainActor.assumeIsolated { self?.swimTick() }
+        }
+        t.tolerance = Self.swimInterval * 0.4
+        RunLoop.main.add(t, forMode: .common)
+        swimTimer = t
+    }
+
+    private func stopSwimming() {
+        swimTimer?.invalidate()
+        swimTimer = nil
+        swimTarget = nil
+        if motion.facingLeft { motion.facingLeft = false }
+    }
+
+    /// One swim step: glide toward the current waypoint within the pet's display; on arrival pick a
+    /// fresh waypoint. Sprite mirrors to face travel direction. Bounded to the display's visibleFrame.
+    private func swimTick() {
+        guard let p = panel, p.isVisible, swimGatingActive() else { stopSwimming(); return }
+        let frame = p.frame
+        let bounds = swimBounds(for: frame)
+        let target = swimTarget ?? Self.randomPoint(in: bounds)
+        let dx = target.x - frame.origin.x
+        let dy = target.y - frame.origin.y
+        let dist = max(0.0001, hypot(dx, dy))
+        let step = Self.swimSpeed * CGFloat(Self.swimInterval)
+        if dist <= step {
+            swimTarget = Self.randomPoint(in: bounds)   // arrived — new heading
+            return
+        }
+        if abs(dx) > 0.5 { motion.facingLeft = dx < 0 }   // authored facing right → flip when going left
+        let next = NSPoint(x: frame.origin.x + dx / dist * step,
+                           y: frame.origin.y + dy / dist * step)
+        isWandering = true
+        p.setFrameOrigin(next)
+        isWandering = false
+        swimTarget = target
+    }
+
+    /// The display the pet currently sits on (global coords; secondary screens can be negative),
+    /// inset so the whole panel stays fully on-screen.
+    private func swimBounds(for frame: NSRect) -> NSRect {
+        let center = NSPoint(x: frame.midX, y: frame.midY)
+        let screen = NSScreen.screens.first { $0.frame.contains(center) }
+            ?? NSScreen.main ?? NSScreen.screens.first
+        let visible = screen?.visibleFrame ?? NSRect(x: 0, y: 0, width: 1440, height: 900)
+        let maxX = max(visible.minX, visible.maxX - frame.width)
+        let maxY = max(visible.minY, visible.maxY - frame.height)
+        return NSRect(x: visible.minX, y: visible.minY,
+                      width: max(1, maxX - visible.minX), height: max(1, maxY - visible.minY))
+    }
+
+    private static func randomPoint(in bounds: NSRect) -> NSPoint {
+        NSPoint(x: CGFloat.random(in: bounds.minX...bounds.maxX),
+                y: CGFloat.random(in: bounds.minY...bounds.maxY))
     }
 
     private func show() {
@@ -182,7 +280,8 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
         let wantAnimated = Self.shouldAnimate(lowPower: ProcessInfo.processInfo.isLowPowerModeEnabled)
         if p.contentView == nil || builtAnimated != wantAnimated {
             let hosting = PetHostingView(rootView: AnyView(
-                FloatingPetView(animated: wantAnimated).environment(store).environment(companion)))
+                FloatingPetView(animated: wantAnimated)
+                    .environment(store).environment(companion).environment(motion)))
             hosting.onOpenPopover = onOpenPopover
             hosting.onHide = onHide
             hosting.languageProvider = { [weak self] in self?.companion.language ?? .systemDefault }
@@ -196,13 +295,18 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
             hosting.toolTip = currentHoverText()
         }
         let petSize = CGFloat(store.floatingPetSize)
-        p.setFrame(targetFrame(petSize: petSize, showingBubble: store.currentBubbleAlert != nil),
-                   display: true)
+        // While swimming, the swim tick owns the origin — don't yank the fish back to its saved
+        // home on every settings/usage-driven sync. Reposition only when parked (not swimming).
+        if swimTimer == nil {
+            p.setFrame(targetFrame(petSize: petSize, showingBubble: store.currentBubbleAlert != nil),
+                       display: true)
+        }
         p.orderFrontRegardless()
         if hoverPanel?.isVisible == true { showHoverCallout() }
     }
 
     private func hide() {
+        stopSwimming()
         hideHoverCallout()
         guard let p = panel else { return }
         p.orderOut(nil)
@@ -316,6 +420,8 @@ final class FloatingPetController: NSObject, NSWindowDelegate {
 
     func windowDidMove(_ notification: Notification) {
         guard let p = panel, p.isVisible else { return }
+        // Programmatic swim moves must not overwrite the user's drag-chosen home origin.
+        if isWandering { return }
         let petSize = CGFloat(store.floatingPetSize)
         let size = Self.panelSize(petSize: petSize, showingBubble: store.currentBubbleAlert != nil)
         let pet = Self.petOrigin(panelOrigin: p.frame.origin, petSize: petSize, panelSize: size)
@@ -416,6 +522,7 @@ struct FloatingPetView: View {
     var animated: Bool = true
     @Environment(UsageStore.self) private var store
     @Environment(CompanionStore.self) private var companion
+    @Environment(FloatingPetMotion.self) private var motion
 
     var body: some View {
         let size = CGFloat(store.floatingPetSize)
@@ -428,8 +535,12 @@ struct FloatingPetView: View {
             }
 
             SpriteView(speciesID: subject.speciesID, size: size, animated: animated,
-                       shiny: subject.isShiny, minFrameDelay: Self.frameFloor)
+                       shiny: subject.isShiny, minFrameDelay: Self.frameFloor,
+                       kingdom: subject.kingdom)
                 .frame(width: size, height: size)
+                // Mirror to face swim direction (sprites are authored facing right).
+                .scaleEffect(x: motion.facingLeft ? -1 : 1, y: 1)
+                .animation(.easeInOut(duration: 0.25), value: motion.facingLeft)
                 .zIndex(0)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)

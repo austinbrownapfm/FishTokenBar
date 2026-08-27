@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <title>Striped Bass S3 Adult</title>
+  <defs>
+    <linearGradient id="flankS3" x1="0" y1="145" x2="0" y2="255" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a4a3d"/>
+      <stop offset="0.14" stop-color="#556a5c"/>
+      <stop offset="0.32" stop-color="#8d9c96"/>
+      <stop offset="0.52" stop-color="#c6d0d1"/>
+      <stop offset="0.74" stop-color="#e5ecee"/>
+      <stop offset="1" stop-color="#f8fbfc"/>
+    </linearGradient>
+    <linearGradient id="finMemS3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8fa0a6"/>
+      <stop offset="1" stop-color="#c2ced2"/>
+    </linearGradient>
+    <clipPath id="bodyClipS3">
+      <path d="M560,201 C536,177 505,164 470,159 C398,147 318,145 246,154 C192,161 158,172 130,182 C129,195 129,206 128,219 C158,231 192,242 246,248 C318,255 398,253 470,242 C505,236 536,222 560,201 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- TAIL -->
+  <g id="tail" data-pivot="130,200">
+    <path d="M130,182 C106,172 74,155 52,144 C76,175 87,190 90,200 C87,210 76,225 52,256 C74,245 106,228 130,218 Z"
+          fill="url(#finMemS3)" stroke="#222c2a" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M118,187 C96,180 76,168 58,153" fill="none" stroke="#4d5d5a" stroke-width="1.7"/>
+    <path d="M118,213 C96,220 76,232 58,247" fill="none" stroke="#4d5d5a" stroke-width="1.7"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <path d="M560,201 C536,177 505,164 470,159 C398,147 318,145 246,154 C192,161 158,172 130,182 C129,195 129,206 128,219 C158,231 192,242 246,248 C318,255 398,253 470,242 C505,236 536,222 560,201 Z"
+          fill="url(#flankS3)" stroke="#222c2a" stroke-width="2.8" stroke-linejoin="round"/>
+
+    <!-- spiny dorsal — taller triangular sail, ~7 spines -->
+    <path d="M461,148 L457,108 L453,135 L449,114 L445,136 L441,120 L437,137 L433,126 L429,138 L425,131 L421,139 L417,135 L413,140 L409,137 L405,148 Z"
+          fill="#61716c" stroke="#222c2a" stroke-width="2.1" stroke-linejoin="round"/>
+    <!-- soft dorsal — angular, straight top edge, soft rays -->
+    <path d="M382,149 L375,120 L316,135 L303,149 Z"
+          fill="url(#finMemS3)" stroke="#222c2a" stroke-width="2.1" stroke-linejoin="round"/>
+    <path d="M362,146 L360,131 M342,147 L341,138 M323,147 L322,141" fill="none" stroke="#222c2a" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- pelvic + anal -->
+    <path d="M450,246 C447,263 434,272 424,266 C432,255 438,250 450,246 Z"
+          fill="url(#finMemS3)" stroke="#222c2a" stroke-width="1.9" stroke-linejoin="round"/>
+    <path d="M244,248 C236,268 212,272 192,264 C207,255 223,251 244,248 Z"
+          fill="url(#finMemS3)" stroke="#222c2a" stroke-width="1.9" stroke-linejoin="round"/>
+
+    <!-- BOLD UNBROKEN STRIPES (8) -->
+    <g clip-path="url(#bodyClipS3)" stroke="#0f0f0f" stroke-width="4.6" stroke-linecap="butt" fill="none">
+      <path d="M146,162 L466,162"/>
+      <path d="M134,173 L482,173"/>
+      <path d="M129,183 L480,183"/>
+      <path d="M129,193 L482,193"/>
+      <path d="M129,202 L482,202"/>
+      <path d="M129,212 L480,212"/>
+      <path d="M130,222 L478,222"/>
+      <path d="M132,231 L474,231"/>
+    </g>
+
+    <!-- gill cover -->
+    <path d="M482,162 C497,187 497,213 482,238" fill="none" stroke="#2f3b39" stroke-width="2.4"/>
+    <!-- mouth -->
+    <path d="M560,202 C549,206 540,207 531,206" fill="none" stroke="#222c2a" stroke-width="2.1"/>
+    <!-- eye -->
+    <circle cx="524" cy="189" r="8.8" fill="#0f1518" stroke="#e8eef0" stroke-width="1.6"/>
+    <circle cx="520.6" cy="185.6" r="2.7" fill="#f4f8f9"/>
+  </g>
+
+  <!-- PECTORAL -->
+  <g id="pecfin" data-pivot="482,208">
+    <path d="M482,207 C471,226 452,242 434,240 C452,228 462,212 482,207 Z"
+          fill="url(#finMemS3)" stroke="#222c2a" stroke-width="1.9" stroke-linejoin="round" opacity="0.96"/>
+    <path d="M478,211 C464,223 453,232 440,237" fill="none" stroke="#5a6a66" stroke-width="1.4"/>
+  </g>
+</svg>

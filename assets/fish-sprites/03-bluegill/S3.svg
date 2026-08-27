@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#243D33"/>
+      <stop offset="0.34" stop-color="#3C5A3E"/>
+      <stop offset="0.60" stop-color="#5E7A44"/>
+      <stop offset="0.82" stop-color="#9C7A3C"/>
+      <stop offset="1" stop-color="#C97A34"/>
+    </linearGradient>
+    <radialGradient id="breast3" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#E68A34"/>
+      <stop offset="0.7" stop-color="#CE6E28"/>
+      <stop offset="1" stop-color="#CE6E28" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="face3" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#4E6FB0"/>
+      <stop offset="0.65" stop-color="#3A5488"/>
+      <stop offset="1" stop-color="#3A5488" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sheen3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#bfe0ff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <path id="bodyPath3" d="M 155 178
+      C 185 116, 245 86, 305 78
+      C 375 71, 440 94, 488 120
+      C 522 138, 548 157, 553 179
+      C 546 200, 522 215, 496 222
+      C 452 262, 392 304, 322 322
+      C 268 335, 200 332, 165 252
+      C 158 236, 154 205, 155 178 Z"/>
+    <clipPath id="bodyClip3"><use href="#bodyPath3"/></clipPath>
+  </defs>
+
+  <g id="tail" data-pivot="158,205">
+    <path d="M 162 184
+      C 122 176, 96 166, 78 150
+      C 92 176, 104 194, 122 206
+      C 104 220, 92 244, 80 262
+      C 112 250, 140 236, 164 230
+      C 152 214, 152 200, 162 184 Z"
+      fill="#3E5238" stroke="#182517" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 128 200 C 138 196, 150 194, 160 194 M 128 210 C 138 214, 150 218, 160 220"
+      fill="none" stroke="#182517" stroke-width="2" stroke-opacity="0.5"/>
+  </g>
+
+  <g id="body">
+    <path d="M 214 102
+      L 226 62 L 244 76 L 258 56 L 276 72 L 292 54 L 312 72 L 330 62
+      C 356 48, 384 54, 398 84
+      C 404 98, 404 106, 402 112
+      C 360 96, 300 88, 250 96 C 232 99, 222 101, 214 102 Z"
+      fill="#3B5340" stroke="#182517" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 258 304
+      L 262 346 L 280 326 C 296 364, 338 360, 356 322
+      C 350 312, 328 306, 300 306 C 282 306, 268 305, 258 304 Z"
+      fill="#3B5340" stroke="#182517" stroke-width="3" stroke-linejoin="round"/>
+
+    <use href="#bodyPath3" fill="url(#bg3)" stroke="#182517" stroke-width="3.5" stroke-linejoin="round"/>
+
+    <g clip-path="url(#bodyClip3)">
+      <g fill="#1E3226" fill-opacity="0.34">
+        <path d="M 200 88 C 196 160 196 250 214 324 L 230 324 C 214 250 214 160 218 90 Z"/>
+        <path d="M 246 82 C 242 160 244 260 260 328 L 276 328 C 262 260 260 160 264 84 Z"/>
+        <path d="M 292 80 C 290 160 292 262 306 324 L 322 322 C 310 262 308 160 310 80 Z"/>
+        <path d="M 338 82 C 338 160 340 250 352 314 L 368 310 C 358 250 356 160 356 84 Z"/>
+        <path d="M 384 88 C 386 158 388 236 398 298 L 414 292 C 406 236 404 158 402 90 Z"/>
+        <path d="M 430 98 C 434 156 436 224 444 278 L 458 270 C 452 224 450 156 448 102 Z"/>
+      </g>
+      <!-- coppery-orange breast (lower front, under gill/pectoral) -->
+      <ellipse cx="420" cy="270" rx="130" ry="80" fill="url(#breast3)"/>
+      <!-- blue-purple face -->
+      <ellipse cx="505" cy="168" rx="70" ry="66" fill="url(#face3)"/>
+      <rect x="140" y="150" width="420" height="120" fill="url(#sheen3)"/>
+    </g>
+
+    <path d="M 430 224 L 418 288 L 448 254 Z"
+      fill="#33463A" stroke="#182517" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <path d="M 470 116 C 486 148, 484 190, 462 218"
+      fill="none" stroke="#243b52" stroke-width="2.5" stroke-opacity="0.6"/>
+
+    <!-- BOLD BLACK OPERCULAR EAR FLAP (larger in breeding male) -->
+    <path d="M 448 146
+      C 470 144, 480 166, 472 186
+      C 464 198, 444 196, 436 184
+      C 431 168, 435 148, 448 146 Z"
+      fill="#101113" stroke="#000000" stroke-width="1.5"/>
+
+    <circle cx="502" cy="150" r="15" fill="#E9E0C8" stroke="#182517" stroke-width="2.5"/>
+    <circle cx="502" cy="150" r="10.5" fill="#B4471F"/>
+    <circle cx="502" cy="150" r="6" fill="#121010"/>
+    <circle cx="506" cy="146" r="2.6" fill="#ffffff"/>
+
+    <path d="M 552 180 C 540 185, 528 185, 520 183"
+      fill="none" stroke="#182517" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <g id="pecfin" data-pivot="446,192">
+    <path d="M 448 190
+      C 424 212, 408 248, 412 278
+      C 428 254, 446 220, 456 196 Z"
+      fill="#4A5E40" fill-opacity="0.92" stroke="#182517" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 420 266 C 428 242 440 214 450 198" fill="none" stroke="#182517" stroke-width="1.6" stroke-opacity="0.5"/>
+  </g>
+</svg>

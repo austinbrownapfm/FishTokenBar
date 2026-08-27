@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4E6033"/>
+      <stop offset="0.42" stop-color="#7E9350"/>
+      <stop offset="0.72" stop-color="#B7C179"/>
+      <stop offset="1" stop-color="#E9E2BE"/>
+    </linearGradient>
+    <linearGradient id="sheen2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <path id="bodyPath2" d="M 155 178
+      C 185 118, 245 88, 305 80
+      C 375 73, 440 96, 488 122
+      C 522 140, 548 158, 553 179
+      C 546 199, 522 214, 496 221
+      C 452 260, 392 302, 322 320
+      C 268 333, 200 330, 165 252
+      C 158 236, 154 205, 155 178 Z"/>
+    <clipPath id="bodyClip2"><use href="#bodyPath2"/></clipPath>
+  </defs>
+
+  <!-- CAUDAL FIN (behind body) -->
+  <g id="tail" data-pivot="158,205">
+    <path d="M 162 184
+      C 122 176, 96 166, 78 150
+      C 92 176, 104 194, 122 206
+      C 104 220, 92 244, 80 262
+      C 112 250, 140 236, 164 230
+      C 152 214, 152 200, 162 184 Z"
+      fill="#6E8043" stroke="#2C3519" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 128 200 C 138 196, 150 194, 160 194 M 128 210 C 138 214, 150 218, 160 220"
+      fill="none" stroke="#2C3519" stroke-width="2" stroke-opacity="0.5"/>
+  </g>
+
+  <g id="body">
+    <!-- DORSAL FIN: single continuous, spiny front + soft rear -->
+    <path d="M 214 104
+      L 226 66 L 244 78 L 258 60 L 276 74 L 292 58 L 312 74 L 330 66
+      C 356 52, 384 58, 398 86
+      C 404 100, 404 108, 402 114
+      C 360 98, 300 90, 250 98 C 232 101, 222 103, 214 104 Z"
+      fill="#5F7239" stroke="#2C3519" stroke-width="3" stroke-linejoin="round"/>
+    <!-- ANAL FIN: spiny front + soft rear -->
+    <path d="M 258 302
+      L 262 342 L 280 324 C 296 360, 338 356, 356 320
+      C 350 310, 328 304, 300 304 C 282 304, 268 303, 258 302 Z"
+      fill="#5F7239" stroke="#2C3519" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- BODY BASE -->
+    <use href="#bodyPath2" fill="url(#bg2)" stroke="#2C3519" stroke-width="3.5" stroke-linejoin="round"/>
+
+    <!-- vertical bars (clipped to body) -->
+    <g clip-path="url(#bodyClip2)">
+      <g fill="#3F5228" fill-opacity="0.26">
+        <path d="M 200 90 C 196 160 196 250 214 322 L 230 322 C 214 250 214 160 218 92 Z"/>
+        <path d="M 246 84 C 242 160 244 260 260 326 L 276 326 C 262 260 260 160 264 86 Z"/>
+        <path d="M 292 82 C 290 160 292 262 306 322 L 322 320 C 310 262 308 160 310 82 Z"/>
+        <path d="M 338 84 C 338 160 340 250 352 312 L 368 308 C 358 250 356 160 356 86 Z"/>
+        <path d="M 384 90 C 386 158 388 236 398 296 L 414 290 C 406 236 404 158 402 92 Z"/>
+        <path d="M 430 100 C 434 156 436 224 444 276 L 458 268 C 452 224 450 156 448 104 Z"/>
+      </g>
+      <!-- sheen -->
+      <rect x="140" y="150" width="420" height="120" fill="url(#sheen2)"/>
+      <!-- pale belly emphasis -->
+      <path d="M 200 300 C 300 348 420 300 500 232 C 460 300 360 336 260 330 C 230 328 210 316 200 300 Z"
+        fill="#EDE7C8" fill-opacity="0.55"/>
+    </g>
+
+    <!-- PELVIC FIN (near side, front) -->
+    <path d="M 430 224 L 420 284 L 448 252 Z"
+      fill="#6E8043" stroke="#2C3519" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- gill cover / cheek line -->
+    <path d="M 470 118 C 486 150, 484 190, 462 216"
+      fill="none" stroke="#2C3519" stroke-width="2.5" stroke-opacity="0.55"/>
+
+    <!-- BLACK OPERCULAR EAR FLAP -->
+    <path d="M 452 150
+      C 470 150, 476 168, 470 184
+      C 462 194, 446 192, 440 182
+      C 436 168, 440 152, 452 150 Z"
+      fill="#16181A" stroke="#0B0C0D" stroke-width="1.5"/>
+
+    <!-- EYE -->
+    <circle cx="500" cy="152" r="15" fill="#F2ECD6" stroke="#2C3519" stroke-width="2.5"/>
+    <circle cx="500" cy="152" r="10.5" fill="#C7912E"/>
+    <circle cx="500" cy="152" r="6" fill="#141210"/>
+    <circle cx="504" cy="148" r="2.6" fill="#ffffff"/>
+
+    <!-- small terminal mouth -->
+    <path d="M 552 180 C 540 184, 528 184, 520 182"
+      fill="none" stroke="#2C3519" stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- PECTORAL FIN (own group, pivot at base) -->
+  <g id="pecfin" data-pivot="446,192">
+    <path d="M 448 190
+      C 424 212, 408 246, 412 274
+      C 428 252, 446 220, 456 196 Z"
+      fill="#7C8E52" fill-opacity="0.92" stroke="#2C3519" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M 420 262 C 428 240 440 214 450 198" fill="none" stroke="#2C3519" stroke-width="1.6" stroke-opacity="0.5"/>
+  </g>
+</svg>

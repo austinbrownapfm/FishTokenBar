@@ -9,7 +9,10 @@ import Foundation
 /// 봉투의 `format`/`schema` 는 관대 디코딩 대상이 아니라(기본값 없음) 이 오인을 먼저 차단한다.
 struct SaveEnvelope: Codable, Sendable {
     static let formatID = "poketokenbar.save"
-    static let schemaVersion = 1
+    // v2: added the creature-kingdom fields (`activeKingdom`, `parked`). A pre-fish app (schema 1)
+    // importing a v2 save must hit the `newerSchema` guard rather than silently dropping parked
+    // kingdoms — so the bump is load-bearing, not cosmetic.
+    static let schemaVersion = 2
 
     var format: String
     var schema: Int
@@ -165,6 +168,21 @@ enum SaveTransfer {
             active.totalForms = min(max(1, active.totalForms), 12)
             active.stageIndex = min(max(0, active.stageIndex), max(0, active.pathIDs.count - 1))
             s.active = active
+        }
+        // Parked kingdoms carry their own working set — apply the SAME clamps so a corrupt parked
+        // mon can't trip the `phaseThreshold` arithmetic trap when that kingdom is later switched in.
+        s.parked = s.parked.map { parked in
+            var p = parked
+            p.eggUsage = clampToken(p.eggUsage)
+            if p.active != nil { p.eggTier = nil; p.pendingHatchID = nil }
+            if p.eggTier?.captureRateCeiling == nil { p.eggTier = nil }
+            if var a = p.active {
+                a.usedAtStage = clampToken(a.usedAtStage)
+                a.totalForms = min(max(1, a.totalForms), 12)
+                a.stageIndex = min(max(0, a.stageIndex), max(0, a.pathIDs.count - 1))
+                p.active = a
+            }
+            return p
         }
         s.reconcileRepresentativeSelection()
         return s

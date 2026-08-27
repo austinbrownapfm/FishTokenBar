@@ -121,6 +121,19 @@ struct SettingsView: View {
         @Bindable var store = store
         settingsSection(l.generalSectionTitle) {
             groupRow {
+                // Creature kingdom: Pokémon ↔ Fish. Switching parks each kingdom's progress
+                // independently (your Pokémon wait while you raise fish, and vice-versa).
+                Text("Mode")
+                Spacer()
+                Picker("", selection: Binding(
+                    get: { companion.activeKingdom },
+                    set: { companion.switchKingdom(to: $0) })) {
+                    ForEach(Kingdom.allCases, id: \.self) { Text($0.displayName).tag($0) }
+                }
+                .labelsHidden().pickerStyle(.menu).fixedSize()
+            }
+            Divider()
+            groupRow {
                 Text(l.language)
                 Spacer()
                 Picker("", selection: Binding(
@@ -238,6 +251,9 @@ struct SettingsView: View {
                 }
                 Divider()
                 toggleRow(l.floatingPetBubbleAlertsLabel, $store.floatingPetBubbleAlerts)
+                Divider()
+                // Fish-mode behavior: the pet wanders the current display.
+                toggleRow("Let fish swim around the screen", $store.floatingPetSwims)
             }
         }
     }

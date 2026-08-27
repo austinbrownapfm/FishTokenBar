@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyG2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8F5019"/>
+      <stop offset="34%" stop-color="#BE7431"/>
+      <stop offset="56%" stop-color="#D6944B"/>
+      <stop offset="72%" stop-color="#E9C287"/>
+      <stop offset="100%" stop-color="#FAF1E1"/>
+    </linearGradient>
+    <linearGradient id="finG2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A55E26"/>
+      <stop offset="100%" stop-color="#CD8A48"/>
+    </linearGradient>
+    <linearGradient id="tailG2" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#B06A2C"/>
+      <stop offset="100%" stop-color="#C98A48"/>
+    </linearGradient>
+  </defs>
+
+  <!-- TAIL (caudal fin only) -->
+  <g id="tail" data-pivot="117,197">
+    <path d="M118,192 L50,152 C43,161 43,173 61,188 L72,197 L61,206 C43,221 43,233 50,242 L118,204 Z"
+          fill="url(#tailG2)" stroke="#5E3212" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M100,193 L64,168 M100,197 L60,197 M100,201 L64,226" stroke="#7A481D" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- BODY: body + head + eye + dorsal/anal/pelvic fins + ocellus marking -->
+  <g id="body">
+    <!-- long dorsal fin: spiny front + soft rear (Sciaenidae) -->
+    <path d="M352,124 L346,96 L339,122 L331,90 L323,122 L315,88 L307,122 L299,90 L291,122 L283,94
+             L277,120 C258,104 226,102 196,128 C190,132 187,134 185,135
+             C240,148 300,140 352,124 Z"
+          fill="url(#finG2)" stroke="#5E3212" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- anal fin -->
+    <path d="M232,258 L214,300 L198,262 L206,258 Z" fill="url(#finG2)" stroke="#5E3212" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M262,262 C244,296 226,300 214,300 L232,258 Z" fill="url(#finG2)" stroke="#5E3212" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- pelvic fin -->
+    <path d="M406,252 L392,292 L378,258 Z" fill="url(#finG2)" stroke="#5E3212" stroke-width="2.5" stroke-linejoin="round"/>
+
+    <!-- main body -->
+    <path d="M572,202
+             C570,183 562,167 544,158
+             C498,142 428,127 330,125
+             C250,123 180,142 132,173
+             L117,191 L117,205 L132,223
+             C190,259 260,273 330,271
+             C420,269 490,251 528,231
+             C548,220 562,212 568,206
+             C570,205 571,204 572,202 Z"
+          fill="url(#bodyG2)" stroke="#5E3212" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- back countershade wash -->
+    <path d="M520,150 C470,138 400,125 330,123 C250,121 180,141 132,172 L146,182 C200,156 270,144 340,146 C410,148 470,158 512,168 Z"
+          fill="#7C4416" opacity="0.35"/>
+    <!-- lateral sheen highlight -->
+    <path d="M150,196 C260,206 400,206 540,196 C400,214 260,214 150,196 Z" fill="#F2D49B" opacity="0.45"/>
+
+    <!-- gill cover line -->
+    <path d="M508,152 C498,180 498,214 512,236" fill="none" stroke="#7A481D" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+
+    <!-- low subterminal mouth (set low on head, points slightly down) -->
+    <path d="M568,205 C560,210 552,211 545,210" fill="none" stroke="#5E3212" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- eye (normal, friendly) -->
+    <circle cx="540" cy="181" r="12" fill="#FBF3E4" stroke="#5E3212" stroke-width="2"/>
+    <circle cx="540" cy="181" r="8" fill="#231407"/>
+    <circle cx="536.5" cy="177.5" r="2.6" fill="#FFFFFF"/>
+
+    <!-- SIGNATURE OCELLUS: bold black tail spot near caudal peduncle -->
+    <circle cx="150" cy="182" r="20" fill="#FBF1DE" opacity="0.85"/>
+    <circle cx="150" cy="182" r="15.5" fill="#141210"/>
+  </g>
+
+  <!-- PECTORAL FIN -->
+  <g id="pecfin" data-pivot="496,206">
+    <path d="M496,206 C482,236 464,250 446,250 C454,230 466,214 484,204 Z"
+          fill="url(#finG2)" stroke="#5E3212" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M490,210 L462,242 M488,215 L470,246" stroke="#7A481D" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

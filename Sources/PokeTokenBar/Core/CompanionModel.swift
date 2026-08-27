@@ -316,9 +316,18 @@ struct EvoLine: Sendable {
     let names: [Int: [String: String]]
     var totalForms: Int { tree.depth }
 
-    init(baseID: Int, tree: EvoNode, rarity: Rarity, names: [Int: [String: String]]) {
+    /// - Parameter filterAnimated: Pokémon lines are pruned to species that have a Gen-V animated
+    ///   GIF asset (national dex 1…649) via `keepingAnimatedSprites()`. Other kingdoms (Fish, …)
+    ///   ship their own bundled sprites for every species, so they pass `false` — otherwise any
+    ///   species id ∉ 1…649 would have its growth tree silently collapsed to a childless node.
+    init(baseID: Int, tree: EvoNode, rarity: Rarity, names: [Int: [String: String]],
+         filterAnimated: Bool = true) {
         self.baseID = baseID
-        self.tree = tree.keepingAnimatedSprites() ?? EvoNode(speciesID: baseID, children: [])
+        if filterAnimated {
+            self.tree = tree.keepingAnimatedSprites() ?? EvoNode(speciesID: baseID, children: [])
+        } else {
+            self.tree = tree
+        }
         self.rarity = rarity
         self.names = names
     }
@@ -510,6 +519,25 @@ private extension KeyedDecodingContainer {
     }
 }
 
+/// A non-active kingdom's saved progress. When the user switches kingdoms, the current
+/// working set (the top-level `CompanionState` creature fields) is snapshotted into one of
+/// these so switching back restores exactly where they left off. Kept as an array (each item
+/// self-describing via `kingdom`) rather than a `[Kingdom: …]` dict, because Swift's JSONEncoder
+/// serializes a non-String/Int-keyed dictionary as a fragile positional array — hostile to the
+/// repo's lenient hand-recoverable JSON. An array also lets `Lossy<ParkedKingdom>` isolate a
+/// single corrupt kingdom without dropping the others.
+struct ParkedKingdom: Codable, Sendable {
+    var kingdom: Kingdom
+    var active: MonState?
+    var dex: [DexEntry]
+    var eggUsage: Int
+    var eggTier: Rarity?
+    var pendingHatchID: Int?
+    var representativeSpeciesID: Int?
+    var collectedFinals: Set<String>
+    var inventory: [String: Int]
+}
+
 /// 영속 상태(Application Support JSON). 포켓몬 전환 — 이전 커스텀 캐릭터 상태는 폐기(새로 시작).
 struct CompanionState: Codable, Sendable {
     // 토큰: 설치 이후만 측정
@@ -553,6 +581,18 @@ struct CompanionState: Codable, Sendable {
     // 사탕 지급 첫 실행 시드 완료 — 업데이트 직후 이미 100%였던 창의 소급 지급 차단.
     var candyFeatureSeeded = false
 
+    // MARK: - Creature kingdom (Pokémon / Fish / …)
+    // The top-level creature fields above (active, dex, eggUsage, eggTier, pendingHatchID,
+    // representativeSpeciesID, collectedFinals, inventory) are the ACTIVE kingdom's working set —
+    // the whole existing engine reads them unchanged. Inactive kingdoms live in `parked`.
+    // Token accounting (usedSinceInstall/spentTokens/claimed…/candy*) is GLOBAL and never parked.
+
+    /// Which kingdom's creature is currently being raised. Legacy saves (pre-fish) lack this key
+    /// and default to `.pokemon`, so existing users are untouched — nothing moved off the top level.
+    var activeKingdom: Kingdom = .pokemon
+    /// Snapshots of the non-active kingdoms' progress. Empty for legacy/fresh saves.
+    var parked: [ParkedKingdom] = []
+
     init() {}
 
     // 하위호환 + 손상 복원 디코딩: 누락 키·타입 불일치·일부 손상 필드를 모두 기본값으로 흡수한다 —
@@ -587,6 +627,64 @@ struct CompanionState: Codable, Sendable {
         inventory          = c.lenient([String: Int].self, forKey: .inventory, default: [:])
         candyGrantTier     = c.lenient([String: Int].self, forKey: .candyGrantTier, default: [:])
         candyFeatureSeeded = c.lenient(Bool.self, forKey: .candyFeatureSeeded, default: false)
+        // Kingdom fields — absent in legacy saves. Missing/unknown activeKingdom → .pokemon (legacy
+        // default); parked isolates a corrupt entry via Lossy rather than dropping all kingdoms.
+        activeKingdom      = c.lenient(Kingdom.self, forKey: .activeKingdom, default: .legacyDefault)
+        parked             = c.lenient([Lossy<ParkedKingdom>].self, forKey: .parked, default: []).compactMap(\.value)
+    }
+
+    // MARK: - Kingdom switching (pure struct logic — testable without the store)
+
+    /// Snapshot the current top-level working set as a `ParkedKingdom` tagged for `kingdom`.
+    func snapshotWorkingSet(as kingdom: Kingdom) -> ParkedKingdom {
+        ParkedKingdom(kingdom: kingdom, active: active, dex: dex, eggUsage: eggUsage,
+                      eggTier: eggTier, pendingHatchID: pendingHatchID,
+                      representativeSpeciesID: representativeSpeciesID,
+                      collectedFinals: collectedFinals, inventory: inventory)
+    }
+
+    /// Overwrite the top-level working set from a parked snapshot.
+    mutating func restoreWorkingSet(from p: ParkedKingdom) {
+        active = p.active
+        dex = p.dex
+        eggUsage = p.eggUsage
+        eggTier = p.eggTier
+        pendingHatchID = p.pendingHatchID
+        representativeSpeciesID = p.representativeSpeciesID
+        collectedFinals = p.collectedFinals
+        inventory = p.inventory
+    }
+
+    /// Reset the working set to a fresh, never-hatched egg for a kingdom visited for the first time.
+    /// Only the creature fields reset — global token accounting is preserved.
+    mutating func resetWorkingSetForFreshKingdom() {
+        active = nil
+        dex = []
+        eggUsage = 0
+        eggTier = nil
+        pendingHatchID = nil
+        representativeSpeciesID = nil
+        collectedFinals = []
+        inventory = [:]
+    }
+
+    /// Switch the active kingdom: park the current working set, then restore the target's parked
+    /// snapshot (or a fresh egg if the target was never visited). No-op if already active.
+    /// Global token fields are untouched. Returns true if a switch actually occurred.
+    @discardableResult
+    mutating func switchActiveKingdom(to target: Kingdom) -> Bool {
+        guard target != activeKingdom else { return false }
+        let snapshot = snapshotWorkingSet(as: activeKingdom)
+        parked.removeAll { $0.kingdom == activeKingdom }
+        parked.append(snapshot)
+        if let idx = parked.firstIndex(where: { $0.kingdom == target }) {
+            let restored = parked.remove(at: idx)
+            restoreWorkingSet(from: restored)
+        } else {
+            resetWorkingSetForFreshKingdom()
+        }
+        activeKingdom = target
+        return true
     }
 
     /// 졸업 기록 또는 현재 개체가 실제로 도달한 단계에 이 종이 포함되는가.

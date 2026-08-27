@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyGrad2" x1="0" y1="160" x2="0" y2="242" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5f7440"/>
+      <stop offset="0.45" stop-color="#8a9a63"/>
+      <stop offset="0.72" stop-color="#c3c6a4"/>
+      <stop offset="1" stop-color="#e7e7d3"/>
+    </linearGradient>
+    <linearGradient id="finGrad2" x1="0" y1="150" x2="0" y2="180" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6f854a"/>
+      <stop offset="1" stop-color="#9caf77"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL (caudal fin only) ===================== -->
+  <g id="tail" data-pivot="160,201">
+    <path d="M166,178
+             C132,164 108,160 92,163
+             C104,178 110,191 112,201
+             C110,211 104,224 92,239
+             C108,242 132,238 166,224
+             C159,208 159,194 166,178 Z"
+          fill="#7f9852" stroke="#31441f" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M156,184 C138,178 124,177 114,180 M156,197 C142,196 130,197 120,200
+             M156,205 C142,206 130,207 120,208 M156,218 C138,224 124,225 114,222"
+          fill="none" stroke="#4a6329" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- soft dorsal (small) -->
+    <path d="M300,166 C292,146 278,138 262,141 C258,151 258,163 264,171 Z"
+          fill="url(#finGrad2)" stroke="#31441f" stroke-width="2.4" stroke-linejoin="round"/>
+    <!-- spiny dorsal (small, membraned) -->
+    <path d="M308,168 L312,146 L320,154 L328,140 L336,152 L344,138 L352,150 L360,140 L364,164 Z"
+          fill="url(#finGrad2)" stroke="#31441f" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- anal fin (small) -->
+    <path d="M236,232 C232,252 228,266 238,270 C246,262 252,244 256,230 Z"
+          fill="url(#finGrad2)" stroke="#31441f" stroke-width="2.4" stroke-linejoin="round"/>
+    <!-- pelvic fin (small) -->
+    <path d="M398,232 C394,250 390,260 398,262 C408,256 414,244 418,230 Z"
+          fill="#819957" stroke="#31441f" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- main body: slim juvenile minnow -->
+    <path d="M574,192
+             C518,172 442,164 362,166
+             C286,168 212,176 160,190
+             L160,214
+             C214,224 286,236 362,238
+             C442,240 512,232 550,222
+             C560,219 566,210 571,203
+             Z"
+          fill="url(#bodyGrad2)" stroke="#31441f" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- BOLD SOLID BLACK MIDLINE STRIPE (juvenile diagnostic — continuous, not yet broken) -->
+    <path d="M168,204
+             C240,197 320,197 400,201
+             C440,203 470,206 494,209
+             C470,214 440,214 400,213
+             C320,212 240,212 168,209 Z"
+          fill="#1c2712"/>
+    <!-- caudal spot at tail base -->
+    <ellipse cx="166" cy="205" rx="9" ry="8" fill="#1c2712"/>
+
+    <!-- operculum edge -->
+    <path d="M492,176 C480,196 480,216 492,236" fill="none" stroke="#3e5626" stroke-width="2.2" stroke-linecap="round"/>
+
+    <!-- moderately large mouth, hinge reaching under/behind the eye -->
+    <path d="M572,200 C552,208 528,212 504,212 C486,212 472,209 464,205
+             C480,201 504,197 528,196 C548,195 562,196 572,200 Z"
+          fill="#1d140d" stroke="#160f09" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M572,199 C548,201 522,203 498,205 C484,206 472,207 464,209"
+          fill="none" stroke="#1a2610" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M572,203 C552,210 530,214 508,214 C488,214 472,211 464,206"
+          fill="none" stroke="#1a2610" stroke-width="2.4" stroke-linecap="round"/>
+
+    <!-- OVERSIZED juvenile eye -->
+    <circle cx="516" cy="188" r="17" fill="#f2ecd0" stroke="#31441f" stroke-width="2.4"/>
+    <circle cx="516" cy="188" r="12.5" fill="#b58a2c"/>
+    <circle cx="516" cy="188" r="7.5" fill="#141008"/>
+    <circle cx="519.5" cy="183.5" r="3.4" fill="#ffffff"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN ===================== -->
+  <g id="pecfin" data-pivot="456,208">
+    <path d="M456,208 C440,222 428,238 426,252 C438,250 452,240 462,222 C460,216 458,211 456,208 Z"
+          fill="#93a86e" stroke="#31441f" stroke-width="2.2" stroke-linejoin="round" opacity="0.95"/>
+    <path d="M453,216 C444,228 438,238 436,248" fill="none" stroke="#4a6329" stroke-width="1.4" stroke-linecap="round" opacity="0.55"/>
+  </g>
+</svg>

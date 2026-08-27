@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <clipPath id="bodyClip">
+      <path d="M 578 198 C 545 176, 505 158, 470 154 C 400 143, 340 140, 300 143 C 220 148, 150 165, 110 178 L 110 222 C 160 240, 230 258, 310 262 C 400 264, 480 252, 520 232 C 545 222, 562 212, 578 198 Z"/>
+    </clipPath>
+    <linearGradient id="flankSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF3F4"/>
+      <stop offset="0.5" stop-color="#D3DEE1"/>
+      <stop offset="1" stop-color="#EAF0EE"/>
+    </linearGradient>
+    <linearGradient id="pinkStripe" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F27CB2"/>
+      <stop offset="0.45" stop-color="#E24A8C"/>
+      <stop offset="1" stop-color="#C43A76"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL (caudal fin only) ===================== -->
+  <g id="tail" data-pivot="112,200">
+    <path d="M 112 180 L 66 150 L 58 176 L 74 200 L 58 224 L 66 250 L 112 220 Z"
+          fill="#8FA06A" stroke="#33402C" stroke-width="2.5" stroke-linejoin="round"/>
+    <!-- rays -->
+    <g stroke="#5C6E44" stroke-width="1.4" opacity="0.7">
+      <path d="M 108 186 L 70 160" fill="none"/>
+      <path d="M 106 194 L 66 178" fill="none"/>
+      <path d="M 106 206 L 66 200" fill="none"/>
+      <path d="M 106 214 L 66 222" fill="none"/>
+      <path d="M 108 220 L 70 240" fill="none"/>
+    </g>
+    <!-- dense spots on tail -->
+    <g fill="#1F2620">
+      <ellipse cx="96" cy="168" rx="3" ry="2.4"/>
+      <ellipse cx="86" cy="176" rx="2.6" ry="2.2"/>
+      <ellipse cx="98" cy="182" rx="2.8" ry="2.4"/>
+      <ellipse cx="88" cy="190" rx="2.6" ry="2.2"/>
+      <ellipse cx="100" cy="196" rx="2.6" ry="2.2"/>
+      <ellipse cx="90" cy="204" rx="2.6" ry="2.2"/>
+      <ellipse cx="100" cy="210" rx="2.6" ry="2.2"/>
+      <ellipse cx="88" cy="216" rx="2.6" ry="2.2"/>
+      <ellipse cx="98" cy="224" rx="2.8" ry="2.4"/>
+      <ellipse cx="86" cy="230" rx="2.4" ry="2"/>
+      <ellipse cx="78" cy="186" rx="2.2" ry="1.8"/>
+      <ellipse cx="78" cy="214" rx="2.2" ry="1.8"/>
+    </g>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- fins that sit under the body silhouette (base overlapped by body) -->
+    <!-- dorsal fin -->
+    <path d="M 362 150 C 352 108, 322 92, 292 98 C 300 118, 300 138, 290 150 Z"
+          fill="#8B9C68" stroke="#33402C" stroke-width="2.5" stroke-linejoin="round"/>
+    <g stroke="#5C6E44" stroke-width="1.3" opacity="0.7" fill="none">
+      <path d="M 300 146 L 300 104"/>
+      <path d="M 314 148 L 316 100"/>
+      <path d="M 330 148 L 336 104"/>
+      <path d="M 346 148 L 352 116"/>
+    </g>
+    <!-- spots on dorsal -->
+    <g fill="#1F2620">
+      <ellipse cx="306" cy="116" rx="2.6" ry="2.2"/>
+      <ellipse cx="320" cy="112" rx="2.6" ry="2.2"/>
+      <ellipse cx="334" cy="120" rx="2.6" ry="2.2"/>
+      <ellipse cx="312" cy="130" rx="2.4" ry="2"/>
+      <ellipse cx="328" cy="134" rx="2.4" ry="2"/>
+      <ellipse cx="344" cy="128" rx="2.2" ry="1.8"/>
+    </g>
+
+    <!-- adipose fin (SALMONID SIGNATURE) between dorsal and tail -->
+    <path d="M 182 158 C 172 144, 154 143, 146 154 C 152 160, 168 162, 182 160 Z"
+          fill="#7E8F5C" stroke="#33402C" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- pelvic fin -->
+    <path d="M 342 256 C 330 280, 308 288, 298 285 C 312 270, 328 258, 344 253 Z"
+          fill="#D9B7B0" stroke="#33402C" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- anal fin -->
+    <path d="M 226 256 C 214 280, 194 287, 184 284 C 198 268, 214 254, 230 250 Z"
+          fill="#D9B7B0" stroke="#33402C" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- body silhouette base -->
+    <path d="M 578 198 C 545 176, 505 158, 470 154 C 400 143, 340 140, 300 143 C 220 148, 150 165, 110 178 L 110 222 C 160 240, 230 258, 310 262 C 400 264, 480 252, 520 232 C 545 222, 562 212, 578 198 Z"
+          fill="url(#flankSheen)" stroke="#33402C" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <!-- countershading: olive back + pale belly, clipped to body -->
+    <g clip-path="url(#bodyClip)">
+      <path d="M 90 100 L 590 100 L 590 190 C 540 182, 460 180, 380 182 C 280 184, 180 183, 90 185 Z"
+            fill="#6E8150" opacity="0.92"/>
+      <path d="M 90 305 L 590 305 L 590 234 C 540 242, 460 248, 380 251 C 280 253, 180 249, 90 241 Z"
+            fill="#F4F6F1" opacity="0.85"/>
+    </g>
+
+    <!-- magenta-pink lateral stripe (clipped to body) -->
+    <g clip-path="url(#bodyClip)">
+      <path d="M 108 205 C 260 211, 420 209, 552 199 C 553 206, 553 211, 552 214 C 420 224, 260 226, 108 219 Z"
+            fill="url(#pinkStripe)"/>
+      <path d="M 130 207 C 280 212, 430 210, 545 202 C 545 205, 545 207, 545 209 C 430 216, 280 218, 130 214 Z"
+            fill="#F79ECB" opacity="0.7"/>
+    </g>
+
+    <!-- dense small black spots over the back (above the stripe), clipped to body -->
+    <g clip-path="url(#bodyClip)" fill="#1F2620">
+      <ellipse cx="140" cy="176" rx="3" ry="2.4"/>
+      <ellipse cx="158" cy="168" rx="2.8" ry="2.3"/>
+      <ellipse cx="150" cy="188" rx="2.6" ry="2.2"/>
+      <ellipse cx="176" cy="174" rx="3" ry="2.4"/>
+      <ellipse cx="168" cy="190" rx="2.6" ry="2.2"/>
+      <ellipse cx="192" cy="166" rx="2.8" ry="2.3"/>
+      <ellipse cx="188" cy="184" rx="2.6" ry="2.2"/>
+      <ellipse cx="208" cy="176" rx="3" ry="2.4"/>
+      <ellipse cx="204" cy="192" rx="2.4" ry="2"/>
+      <ellipse cx="224" cy="166" rx="2.8" ry="2.3"/>
+      <ellipse cx="228" cy="184" rx="2.6" ry="2.2"/>
+      <ellipse cx="244" cy="174" rx="3" ry="2.4"/>
+      <ellipse cx="248" cy="190" rx="2.4" ry="2"/>
+      <ellipse cx="262" cy="164" rx="2.8" ry="2.3"/>
+      <ellipse cx="266" cy="182" rx="2.6" ry="2.2"/>
+      <ellipse cx="282" cy="172" rx="3" ry="2.4"/>
+      <ellipse cx="286" cy="190" rx="2.4" ry="2"/>
+      <ellipse cx="252" cy="158" rx="2.4" ry="2"/>
+      <ellipse cx="300" cy="164" rx="2.8" ry="2.3"/>
+      <ellipse cx="308" cy="182" rx="2.6" ry="2.2"/>
+      <ellipse cx="324" cy="172" rx="2.8" ry="2.3"/>
+      <ellipse cx="330" cy="188" rx="2.4" ry="2"/>
+      <ellipse cx="346" cy="164" rx="2.8" ry="2.3"/>
+      <ellipse cx="352" cy="182" rx="2.6" ry="2.2"/>
+      <ellipse cx="368" cy="172" rx="2.8" ry="2.3"/>
+      <ellipse cx="374" cy="188" rx="2.4" ry="2"/>
+      <ellipse cx="390" cy="166" rx="2.8" ry="2.3"/>
+      <ellipse cx="396" cy="184" rx="2.4" ry="2"/>
+      <ellipse cx="412" cy="174" rx="2.8" ry="2.3"/>
+      <ellipse cx="418" cy="190" rx="2.4" ry="2"/>
+      <ellipse cx="434" cy="168" rx="2.6" ry="2.2"/>
+      <ellipse cx="440" cy="186" rx="2.4" ry="2"/>
+      <ellipse cx="456" cy="176" rx="2.6" ry="2.2"/>
+      <ellipse cx="462" cy="192" rx="2.2" ry="1.8"/>
+      <ellipse cx="478" cy="172" rx="2.4" ry="2"/>
+      <ellipse cx="484" cy="188" rx="2.2" ry="1.8"/>
+      <ellipse cx="500" cy="180" rx="2.2" ry="1.8"/>
+      <!-- a few finer spots below the stripe (rainbow trout spot the flank too) -->
+      <ellipse cx="200" cy="228" rx="2" ry="1.7"/>
+      <ellipse cx="250" cy="232" rx="2" ry="1.7"/>
+      <ellipse cx="300" cy="234" rx="2" ry="1.7"/>
+      <ellipse cx="350" cy="232" rx="2" ry="1.7"/>
+      <ellipse cx="400" cy="228" rx="2" ry="1.7"/>
+    </g>
+
+    <!-- gill cover / operculum line -->
+    <path d="M 500 162 C 492 190, 494 216, 508 234" fill="none" stroke="#4A5A38" stroke-width="2" opacity="0.55"/>
+    <!-- faint pink cheek blush -->
+    <path d="M 512 196 C 528 192, 540 196, 544 204 C 536 210, 522 210, 512 206 Z" fill="#E86AA0" opacity="0.4"/>
+
+    <!-- mouth -->
+    <path d="M 578 200 C 566 203, 556 205, 548 206" fill="none" stroke="#33402C" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- eye -->
+    <circle cx="536" cy="189" r="11.5" fill="#EFE6C9" stroke="#33402C" stroke-width="1.5"/>
+    <circle cx="536" cy="189" r="8.5" fill="#C9A24B"/>
+    <circle cx="535" cy="190" r="5.2" fill="#16181A"/>
+    <circle cx="532.5" cy="186" r="2.1" fill="#FFFFFF"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN ===================== -->
+  <g id="pecfin" data-pivot="472,210">
+    <path d="M 472 210 C 448 234, 416 248, 400 244 C 420 226, 448 210, 472 204 Z"
+          fill="#D9B7B0" stroke="#33402C" stroke-width="2.2" stroke-linejoin="round"/>
+    <g stroke="#B98F87" stroke-width="1.2" opacity="0.8" fill="none">
+      <path d="M 468 210 L 406 240"/>
+      <path d="M 466 214 L 410 244"/>
+      <path d="M 464 207 L 420 231"/>
+    </g>
+  </g>
+</svg>

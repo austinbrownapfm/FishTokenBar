@@ -201,7 +201,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         let subject = companion.representativeSubject
         let id = subject.speciesID
         let shiny = subject.isShiny
-        let key = id.map { "\($0)-\(shiny)" }
+        let kingdom = subject.kingdom
+        // Key includes the kingdom so Pokémon #1 and Fish #1 (colliding raw ids) reload correctly.
+        let key = id.map { "\(kingdom.rawValue)-\($0)-\(shiny)" }
         if key == menuSpriteKey, !menuFrames.isEmpty { return }   // 이미 이 개체로 애니메이션 중
         menuSpriteKey = key
         menuLoadGen += 1
@@ -209,6 +211,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
 
         guard let id else {                  // 알: 2프레임 bob
             setMenuFrames(Self.eggFrames())
+            return
+        }
+
+        // Fish kingdom: composite the bundled local swim frames into the 22px menu-bar strip.
+        // No network, no GIF decode. Capped delay for battery, same as the Pokémon GIF path.
+        if kingdom == .fish {
+            let fishFrames = FishSprites.frames(stageID: id, shiny: shiny)
+            if let first = fishFrames.first {
+                if fishFrames.count > 1 {
+                    setMenuFrames(fishFrames.map {
+                        (Self.menuBarImage(from: $0, up: false), max(0.4, FishSprites.frameDelay))
+                    })
+                } else {
+                    setMenuFrames(Self.bobFrames(from: first))
+                }
+            } else {
+                setMenuFrames(Self.eggFrames())
+            }
             return
         }
         // 정적 스프라이트 bob 을 먼저(없으면 받아와서). GIF 가 받아지면 아래에서 교체.

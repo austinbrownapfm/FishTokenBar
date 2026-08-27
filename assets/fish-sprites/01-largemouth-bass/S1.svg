@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <radialGradient id="yolk1" cx="0.4" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#ffe0a0"/>
+      <stop offset="0.55" stop-color="#f2b957"/>
+      <stop offset="1" stop-color="#dd9a3a"/>
+    </radialGradient>
+    <linearGradient id="bodyGrad1" x1="0" y1="150" x2="0" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7e9159"/>
+      <stop offset="0.6" stop-color="#a9b689"/>
+      <stop offset="1" stop-color="#d6dcc2"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL (translucent larval caudal paddle) ===================== -->
+  <g id="tail" data-pivot="205,204">
+    <path d="M212,190
+             C168,178 132,182 116,202
+             C132,224 168,228 212,216
+             C205,209 205,197 212,190 Z"
+          fill="#aebb90" fill-opacity="0.55" stroke="#6f855090" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M200,196 C170,192 148,194 132,200 M200,210 C170,214 148,214 132,208"
+          fill="none" stroke="#6f8550" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- translucent median finfold along the back (larval, continuous — no true fins yet) -->
+    <path d="M250,190 C300,168 380,160 452,164 C400,176 320,184 250,192 Z"
+          fill="#b6c29a" fill-opacity="0.4" stroke="none"/>
+
+    <!-- main larval body: big head tapering to a thin comma tail -->
+    <path d="M496,196
+             C500,166 480,146 446,146
+             C394,148 300,170 208,194
+             L196,213
+             C300,222 398,226 452,224
+             C486,222 500,210 496,196 Z"
+          fill="url(#bodyGrad1)" fill-opacity="0.9" stroke="#5f7440" stroke-width="2.4" stroke-linejoin="round"/>
+
+    <!-- ventral finfold hint -->
+    <path d="M240,214 C300,230 380,234 440,228 C380,224 300,220 240,214 Z"
+          fill="#b6c29a" fill-opacity="0.35" stroke="none"/>
+
+    <!-- visible yolk sac (bulging under the head) -->
+    <ellipse cx="452" cy="236" rx="34" ry="26" fill="url(#yolk1)" stroke="#c98a2e" stroke-width="1.8" opacity="0.95"/>
+    <ellipse cx="442" cy="228" rx="10" ry="7" fill="#fff0cf" opacity="0.7"/>
+
+    <!-- tiny simple mouth -->
+    <path d="M494,198 C486,201 480,203 474,203" fill="none" stroke="#3a4a24" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- OVERSIZED fry eye (dark, dominant) -->
+    <circle cx="466" cy="188" r="25" fill="#e9e6d2" stroke="#5f7440" stroke-width="2.2"/>
+    <circle cx="466" cy="188" r="20" fill="#20180d"/>
+    <circle cx="461" cy="181" r="6.5" fill="#ffffff" opacity="0.92"/>
+    <circle cx="474" cy="195" r="3" fill="#ffffff" opacity="0.5"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN (tiny translucent bud) ===================== -->
+  <g id="pecfin" data-pivot="424,214">
+    <path d="M424,214 C410,224 402,236 402,246 C412,242 422,232 428,220 Z"
+          fill="#bcc7a0" fill-opacity="0.5" stroke="#6f855080" stroke-width="1.6" stroke-linejoin="round"/>
+  </g>
+</svg>

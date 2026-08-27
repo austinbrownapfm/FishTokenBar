@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyGrad3" x1="0" y1="128" x2="0" y2="288" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a5426"/>
+      <stop offset="0.40" stop-color="#6d8c3e"/>
+      <stop offset="0.66" stop-color="#a9bd72"/>
+      <stop offset="0.85" stop-color="#ddd2ab"/>
+      <stop offset="1" stop-color="#f0e8cc"/>
+    </linearGradient>
+    <linearGradient id="finGrad3" x1="0" y1="100" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#48602a"/>
+      <stop offset="1" stop-color="#83a052"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL (caudal fin only) ===================== -->
+  <g id="tail" data-pivot="152,199">
+    <path d="M160,166
+             C120,150 90,146 72,150
+             C88,168 96,185 98,199
+             C96,213 88,230 72,248
+             C90,252 120,248 160,232
+             C151,210 151,188 160,166 Z"
+          fill="#5a7733" stroke="#28381a" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M150,172 C126,164 108,162 94,166 M150,190 C130,188 114,190 100,194
+             M150,208 C130,210 114,212 100,214 M150,226 C126,234 108,236 94,232"
+          fill="none" stroke="#3a5122" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- soft dorsal fin (rounded lobe, rear) -->
+    <path d="M262,148 C250,116 230,102 206,106 C198,120 196,140 204,154 Z"
+          fill="url(#finGrad3)" stroke="#28381a" stroke-width="3" stroke-linejoin="round"/>
+    <!-- spiny dorsal fin (membrane connecting the spines) — nearly separated from soft by a deep notch -->
+    <path d="M270,150
+             L276,120 L286,130 L296,110 L306,126 L316,106 L326,124 L336,104
+             L346,122 L356,110 L366,142 Z"
+          fill="url(#finGrad3)" stroke="#28381a" stroke-width="2.8" stroke-linejoin="round"/>
+    <path d="M278,140 L276,120 M296,138 L296,110 M316,136 L316,106 M336,134 L336,104 M356,136 L356,110"
+          fill="none" stroke="#3a5122" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- anal fin (attached to belly) -->
+    <path d="M180,240 C176,272 172,300 184,306 C196,298 206,268 214,244 Z"
+          fill="url(#finGrad3)" stroke="#28381a" stroke-width="3" stroke-linejoin="round"/>
+    <!-- pelvic fin (attached to belly) -->
+    <path d="M398,262 C392,288 388,302 400,304 C414,296 424,278 430,260 Z"
+          fill="#6b8b3d" stroke="#28381a" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <!-- main body -->
+    <path d="M578,182
+             C505,142 425,132 352,136
+             C275,140 206,149 152,163
+             L152,236
+             C210,252 270,272 340,276
+             C432,278 505,262 548,242
+             C560,236 566,224 572,214
+             Z"
+          fill="url(#bodyGrad3)" stroke="#28381a" stroke-width="3.4" stroke-linejoin="round"/>
+
+    <!-- broken blotchy dark lateral band along the midline (irregular, jagged) -->
+    <g fill="#263617">
+      <path d="M162,204 L176,195 L188,201 L202,194 L220,200 L212,209 L196,205 L182,211 L168,207 Z"/>
+      <path d="M232,203 L248,194 L262,200 L280,193 L302,199 L296,210 L278,204 L260,210 L244,208 Z"/>
+      <path d="M314,203 L330,195 L346,201 L364,196 L382,202 L372,211 L356,205 L338,210 L322,208 Z"/>
+      <path d="M392,205 L408,199 L424,204 L442,200 L456,205 L446,213 L430,208 L414,212 L400,210 Z"/>
+      <path d="M462,208 L474,204 L484,207 L494,205 L490,213 L478,211 L468,213 Z"/>
+    </g>
+    <!-- faint dark saddle blotches on the back -->
+    <g fill="#2f451f" opacity="0.35">
+      <path d="M300,150 q22,-6 44,0 q-4,10 -22,10 q-18,0 -22,-10 Z"/>
+      <path d="M212,158 q20,-6 40,0 q-4,9 -20,9 q-16,0 -20,-9 Z"/>
+    </g>
+
+    <!-- gill cover / operculum edge -->
+    <path d="M482,146 C464,178 464,214 482,246" fill="none" stroke="#33481e" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M498,150 C484,180 484,210 498,240" fill="none" stroke="#4f6a2f" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- LARGE MOUTH: open terminal gape, jaw hinge clearly BEHIND/past the eye -->
+    <!-- dark mouth interior wedge -->
+    <path d="M574,198 C556,208 536,214 512,216 C494,217 476,215 462,210
+             C476,206 500,201 526,197 C544,194 562,194 574,198 Z"
+          fill="#20160f" stroke="#1a120b" stroke-width="1.5" stroke-linejoin="round"/>
+    <!-- upper jaw / maxilla line sweeping back past the eye to the hinge -->
+    <path d="M574,196 C548,199 520,201 494,203 C480,204 468,206 460,209"
+          fill="none" stroke="#1f2c13" stroke-width="3.2" stroke-linecap="round"/>
+    <!-- lower jaw -->
+    <path d="M574,202 C554,212 532,218 510,219 C486,220 468,217 460,211"
+          fill="none" stroke="#1f2c13" stroke-width="3" stroke-linecap="round"/>
+    <!-- jaw hinge crease behind the eye -->
+    <path d="M462,201 C459,206 459,213 463,218" fill="none" stroke="#33481e" stroke-width="2.2" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- eye (sits forward of the jaw hinge; hinge is behind it) -->
+    <circle cx="512" cy="176" r="14" fill="#f2ecd0" stroke="#28381a" stroke-width="2.4"/>
+    <circle cx="512" cy="176" r="10.5" fill="#b58a2c"/>
+    <circle cx="512" cy="176" r="6" fill="#141008"/>
+    <circle cx="515" cy="172.5" r="2.8" fill="#ffffff"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN ===================== -->
+  <g id="pecfin" data-pivot="450,208">
+    <path d="M450,208 C428,226 412,244 408,262 C424,260 442,248 456,226 C454,218 452,212 450,208 Z"
+          fill="#7d9a4c" stroke="#28381a" stroke-width="2.6" stroke-linejoin="round" opacity="0.95"/>
+    <path d="M446,216 C434,230 426,242 422,254 M450,216 C442,230 438,242 436,254"
+          fill="none" stroke="#4f6a2f" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+  </g>
+</svg>
