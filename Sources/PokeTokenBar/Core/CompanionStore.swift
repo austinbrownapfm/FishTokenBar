@@ -10,7 +10,7 @@ final class CompanionStore {
     private(set) var state = CompanionState()
     private(set) var displayState: CompanionStateKind = .egg
     private(set) var currentLine: EvoLine?
-    private(set) var representativeSubject = RepresentativeSubject(speciesID: nil, isShiny: false)
+    private(set) var representativeSubject = RepresentativeSubject(kingdom: .pokemon, speciesID: nil, isShiny: false)
     private(set) var isHatching = false
     private var isRevealingDitto = false   // 메타몽 리빌 비동기 중복 방지(isHatching 자매)
     private(set) var justEvolvedTo: String?     // 이름(연출/문구)
@@ -37,7 +37,15 @@ final class CompanionStore {
     private(set) var mintFeedbackNature: PokemonNature?
     func consumeMintFeedback() { mintFeedbackNature = nil }
 
-    private let provider: any PokeProviding
+    /// One species-data source per kingdom. Pokémon = PokéAPI (network); Fish = bundled FishCatalog.
+    /// New kingdoms register here. Keyed by `Kingdom` so dispatch follows `state.activeKingdom`.
+    private let catalogs: [Kingdom: any PokeProviding]
+    /// The active kingdom's data source. Computed so every existing `provider.*` call site (hatch,
+    /// evolve, line prefetch, base index) transparently follows the current mode. Falls back to the
+    /// Pokémon catalog defensively — an unregistered kingdom should never reach a nil provider.
+    private var provider: any PokeProviding {
+        catalogs[state.activeKingdom] ?? catalogs[.pokemon] ?? PokeAPIClient.shared
+    }
     private let clock: () -> Date
     private let fileURL: URL
     private var rng: any RandomNumberGenerator
@@ -46,11 +54,12 @@ final class CompanionStore {
     private var activeGeneration = 0
 
     init(provider: any PokeProviding = PokeAPIClient.shared,
+         fishCatalog: any PokeProviding = FishCatalog.shared,
          clock: @escaping () -> Date = Date.init,
          fileURL: URL? = nil,
          rng: any RandomNumberGenerator = SystemRandomNumberGenerator(),
          dittoDisguiseRollingEnabled: Bool = AppEnv.isBundledApp) {
-        self.provider = provider
+        self.catalogs = [.pokemon: provider, .fish: fishCatalog]
         self.clock = clock
         self.fileURL = fileURL ?? Self.defaultURL()
         self.rng = rng
@@ -82,6 +91,25 @@ final class CompanionStore {
 
     var language: AppLanguage { state.language }
     func setLanguage(_ lang: AppLanguage) { state.language = lang; save() }
+
+    /// Switch the active creature kingdom (Pokémon ↔ Fish). Parks the current kingdom's progress
+    /// and restores the target's (or a fresh egg if never visited); global token accounting is
+    /// preserved. Invalidates any in-flight hatch/evolve/line-load for the outgoing kingdom, then
+    /// re-primes the render surfaces (companion, floating pet, menu bar) via the new active line.
+    /// No-op if `target` is already active.
+    func switchKingdom(to target: Kingdom) {
+        guard state.switchActiveKingdom(to: target) else { return }
+        activeGeneration += 1          // drop any awaited work bound to the previous kingdom
+        currentLine = nil
+        isHatching = false
+        justEvolvedTo = nil
+        justGraduated = nil
+        state.reconcileRepresentativeSelection()
+        displayState = state.active != nil ? .idle : .egg
+        refreshRepresentativeSubject()
+        save()
+        if state.active != nil { Task { await loadCurrentLine() } }
+    }
     /// 앱 전체 UI 문자열 — language 변경 시 자동 재렌더.
     var l: L { L(language) }
 
@@ -97,21 +125,27 @@ final class CompanionStore {
     /// 메뉴바와 플로팅 펫이 그릴 대표 종과 색. nil 선택은 기존 동작(현재 개체/알)을 보존한다.
     /// 저장된 값이라 상시 렌더링 경로가 도감 전체를 다시 접거나 불필요한 상태를 관찰하지 않는다.
     struct RepresentativeSubject: Equatable, Sendable {
+        var kingdom: Kingdom = .pokemon
         let speciesID: Int?
         let isShiny: Bool
     }
 
     var representativeSpeciesID: Int? { state.representativeSpeciesID }
 
+    /// The creature kingdom currently being raised (Pokémon / Fish). Read by views that render
+    /// sprites so the home companion and dex grid follow the active mode.
+    var activeKingdom: Kingdom { state.activeKingdom }
+
     /// 관련 상태가 바뀌어 저장되는 경계에서만 갱신한다. 고정 종 하나의 이로치 여부만 조회하므로
     /// 이름 해석·정렬을 포함한 `dexSpecies` 계산을 메뉴바/플로팅 펫 렌더마다 반복하지 않는다.
     private func refreshRepresentativeSubject() {
         let next: RepresentativeSubject
         if let selected = state.representativeSpeciesID {
-            next = RepresentativeSubject(speciesID: selected,
+            next = RepresentativeSubject(kingdom: state.activeKingdom, speciesID: selected,
                                          isShiny: state.ownsShinySpecies(selected))
         } else {
-            next = RepresentativeSubject(speciesID: currentSpeciesID, isShiny: currentIsShiny)
+            next = RepresentativeSubject(kingdom: state.activeKingdom,
+                                         speciesID: currentSpeciesID, isShiny: currentIsShiny)
         }
         if representativeSubject != next { representativeSubject = next }
     }
@@ -143,7 +177,22 @@ final class CompanionStore {
     }
     var stageText: String {
         guard let a = state.active else { return "" }
+        // Fish show their real life-stage label ("Fingerling", "Lunker") — more informative and
+        // honest than a generic "Stage n". Pokémon keep the stage counter / "Final form".
+        if state.activeKingdom == .fish, let label = FishCatalog.shared.stageInfo(id: a.currentID)?.label {
+            return label
+        }
         return isFinalStage ? l.finalForm : l.stage(a.stageIndex + 1, a.totalForms)
+    }
+
+    /// Player-facing name for a creature stage, honest per kingdom. Pokémon → the species name from
+    /// the loaded line; Fish → the life-stage label ("Fry"/"Lunker"), because a fish grows through
+    /// stages of ONE species and must never appear to become a different species.
+    private func stageDisplayName(forID id: Int, line: EvoLine) -> String {
+        if state.activeKingdom == .fish, let label = FishCatalog.shared.stageInfo(id: id)?.label {
+            return label
+        }
+        return line.localizedName(id, state.language)
     }
     var threshold: Int {
         guard let a = state.active else { return 1 }
@@ -501,13 +550,18 @@ final class CompanionStore {
                 state.active!.pathIDs = Array(a.pathIDs.prefix(a.stageIndex + 1)) + [next.speciesID]
                 state.active!.stageIndex += 1
                 state.active!.usedAtStage = a.usedAtStage - thr   // 초과분 이월
-                let newName = line.localizedName(next.speciesID, state.language)
+                let newName = stageDisplayName(forID: next.speciesID, line: line)
                 justEvolvedTo = newName
                 fireCelebration(.evolve)
                 // 짧은 levelUp 창 — 진화 순간 "…(으)로 진화했어요" 문구 노출(hatch/graduate 와 동일 패턴).
                 // 이게 없으면 computeState 가 .levelUp 을 안 내 statusEvolved 가 도달 불가(dead code)였다.
                 eventUntil = clock().addingTimeInterval(4)
-                notifyCompanionEvent(l.notifEvolveTitle, l.notifEvolveBody(newName))
+                // Honesty: fish "grow into" a life stage; only Pokémon "evolve into" a species.
+                if state.activeKingdom == .fish {
+                    notifyCompanionEvent(l.notifGrowTitle, l.notifGrowBody(newName))
+                } else {
+                    notifyCompanionEvent(l.notifEvolveTitle, l.notifEvolveBody(newName))
+                }
             }
         }
         save()

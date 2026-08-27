@@ -12,7 +12,9 @@ final class UpdateChecker {
     private(set) var isUpdating = false
 
     let currentVersion: String
-    private let repo = "chattymin/PokeTokenBar"
+    // This fork's own repo — so update checks compare against FishTokenBar releases, never offer
+    // the upstream PokeTokenBar binary as an "update".
+    private let repo = "austinbrownapfm/FishTokenBar"
     private let clock: () -> Date
     private var lastChecked: Date?
 
@@ -126,7 +128,7 @@ final class UpdateChecker {
     for i in $(seq 1 300); do kill -0 "$brew_pid" 2>/dev/null || break; sleep 1; done
     kill "$brew_pid" 2>/dev/null
     for i in $(seq 1 15); do
-      launchctl kickstart -k "gui/$(id -u)/io.github.chattymin.poketokenbar.login" 2>/dev/null && break
+      launchctl kickstart -k "gui/$(id -u)/io.github.austinbrownapfm.fishtokenbar.login" 2>/dev/null && break
       open "$2" 2>/dev/null && break
       sleep 1
     done

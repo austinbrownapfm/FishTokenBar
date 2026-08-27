@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <title>Striped Bass S2 Schoolie</title>
+  <defs>
+    <linearGradient id="flankS2" x1="0" y1="150" x2="0" y2="250" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3f4c44"/>
+      <stop offset="0.15" stop-color="#586a63"/>
+      <stop offset="0.32" stop-color="#93a1a2"/>
+      <stop offset="0.52" stop-color="#c8d0d4"/>
+      <stop offset="0.74" stop-color="#e6edee"/>
+      <stop offset="1" stop-color="#f8fbfc"/>
+    </linearGradient>
+    <linearGradient id="finMemS2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9fb0b8"/>
+      <stop offset="1" stop-color="#c6d2d6"/>
+    </linearGradient>
+    <clipPath id="bodyClipS2">
+      <path d="M558,202 C535,180 505,168 470,163 C400,152 320,150 250,158 C195,164 160,174 132,183 C131,195 131,205 130,217 C160,228 195,238 250,244 C320,250 400,248 470,238 C505,232 535,220 558,202 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- TAIL (drawn first so body overlaps the seam) -->
+  <g id="tail" data-pivot="132,200">
+    <path d="M132,184 C110,175 80,160 60,150 C82,178 92,190 95,200 C92,210 82,222 60,250 C80,240 110,225 132,216 Z"
+          fill="url(#finMemS2)" stroke="#263038" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M120,188 C100,182 82,172 66,158" fill="none" stroke="#5d6d72" stroke-width="1.6"/>
+    <path d="M120,212 C100,218 82,228 66,242" fill="none" stroke="#5d6d72" stroke-width="1.6"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <!-- main body -->
+    <path d="M558,202 C535,180 505,168 470,163 C400,152 320,150 250,158 C195,164 160,174 132,183 C131,195 131,205 130,217 C160,228 195,238 250,244 C320,250 400,248 470,238 C505,232 535,220 558,202 Z"
+          fill="url(#flankS2)" stroke="#263038" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <!-- SPINY dorsal (anterior, toward head/right) — taller triangular sail, ~7 spines -->
+    <path d="M459,151 L455,112 L451,138 L447,118 L443,139 L439,124 L435,140 L431,129 L427,141 L423,133 L419,142 L415,137 L411,143 L407,140 L403,151 Z"
+          fill="#6f7f84" stroke="#263038" stroke-width="2" stroke-linejoin="round"/>
+    <!-- SOFT dorsal (posterior, toward tail/left) — angular, straight top edge, soft rays -->
+    <path d="M375,152 L368,124 L312,138 L300,152 Z"
+          fill="url(#finMemS2)" stroke="#263038" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M358,149 L356,134 M336,150 L335,140 M318,150 L317,143" fill="none" stroke="#263038" stroke-width="1.2" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- pelvic fin -->
+    <path d="M446,242 C443,258 432,266 423,261 C430,251 435,246 446,242 Z"
+          fill="url(#finMemS2)" stroke="#263038" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- anal fin -->
+    <path d="M242,244 C234,262 212,266 194,258 C208,250 222,246 242,244 Z"
+          fill="url(#finMemS2)" stroke="#263038" stroke-width="1.8" stroke-linejoin="round"/>
+
+    <!-- HORIZONTAL STRIPES (clipped to body) -->
+    <g clip-path="url(#bodyClipS2)" stroke="#141414" stroke-width="4.2" stroke-linecap="butt" fill="none">
+      <path d="M152,166 L468,166"/>
+      <path d="M140,177 L484,177"/>
+      <path d="M135,188 L484,188"/>
+      <path d="M135,198 L486,198"/>
+      <path d="M135,208 L484,208"/>
+      <path d="M136,217 L482,217"/>
+      <path d="M138,226 L478,226"/>
+    </g>
+
+    <!-- gill cover line -->
+    <path d="M486,167 C500,190 500,214 486,235" fill="none" stroke="#39474e" stroke-width="2.2"/>
+
+    <!-- mouth -->
+    <path d="M558,203 C548,207 540,208 532,207" fill="none" stroke="#263038" stroke-width="2"/>
+
+    <!-- eye -->
+    <circle cx="527" cy="190" r="8.5" fill="#111820" stroke="#e8eef0" stroke-width="1.5"/>
+    <circle cx="524" cy="187" r="2.6" fill="#f4f8f9"/>
+  </g>
+
+  <!-- PECTORAL fin (animated flutter) -->
+  <g id="pecfin" data-pivot="478,210">
+    <path d="M478,209 C468,226 450,241 434,239 C450,227 460,213 478,209 Z"
+          fill="url(#finMemS2)" stroke="#263038" stroke-width="1.8" stroke-linejoin="round" opacity="0.96"/>
+    <path d="M474,213 C462,224 452,232 440,236" fill="none" stroke="#6b7b80" stroke-width="1.3"/>
+  </g>
+</svg>

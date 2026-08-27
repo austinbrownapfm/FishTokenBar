@@ -491,6 +491,12 @@ struct L {
     var statusSleep: String { t("지금은 자고 있어요.", "Sleeping now.", "今は眠っています。", "Ahora está durmiendo.", "En train de dormir.", "Agora está dormindo.") }
     func statusEvolved(_ name: String) -> String { t("\(name)(으)로 진화했어요!", "Evolved into \(name)!", "\(name) に進化しました！", "¡Evolucionó a \(name)!", "A évolué en \(name) !", "Evoluiu para \(name)!") }
     var statusGrew: String { t("성장했어요!", "It grew!", "成長しました！", "¡Ha crecido!", "Il a grandi !", "Cresceu!") }
+    // Fish kingdom vocabulary — a real fish GROWS through life stages; it never "evolves" into
+    // another species. All fish-facing progression copy must use these, never the evolve strings.
+    var notifGrowTitle: String { t("🎣 성장!", "🎣 Grew!", "🎣 成長！", "🎣 ¡Creció!", "🎣 A grandi !", "🎣 Cresceu!") }
+    func notifGrowBody(_ name: String) -> String { t("\(name)(으)로 자랐어요!", "Grew into \(name)!", "\(name) に成長しました！", "¡Creció hasta \(name)!", "A grandi en \(name) !", "Cresceu para \(name)!") }
+    func statusGrewInto(_ name: String) -> String { t("\(name)(으)로 자랐어요!", "Grew into \(name)!", "\(name) に成長しました！", "¡Creció hasta \(name)!", "A grandi en \(name) !", "Cresceu para \(name)!") }
+    var trophyForm: String { t("트로피급", "Trophy", "トロフィー級", "Trofeo", "Trophée", "Troféu") }
 
     // MARK: companion 이벤트 시스템 알림
     var notifHatchTitle: String { t("🥚 부화!", "🥚 Hatched!", "🥚 孵化！", "🥚 ¡Eclosionó!", "🥚 Éclosion !", "🥚 Chocou!") }

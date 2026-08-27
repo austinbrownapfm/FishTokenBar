@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyG1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9C6C3E"/>
+      <stop offset="36%" stop-color="#C0925F"/>
+      <stop offset="58%" stop-color="#D6B384"/>
+      <stop offset="76%" stop-color="#EEDDC4"/>
+      <stop offset="100%" stop-color="#FCF7EF"/>
+    </linearGradient>
+    <linearGradient id="finG1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B07E4A"/>
+      <stop offset="100%" stop-color="#D3AE7D"/>
+    </linearGradient>
+    <linearGradient id="tailG1" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#B58253"/>
+      <stop offset="100%" stop-color="#D0AC7B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- TAIL -->
+  <g id="tail" data-pivot="117,198">
+    <path d="M118,193 L58,160 C51,168 51,179 67,192 L77,198 L67,204 C51,217 51,228 58,236 L118,203 Z"
+          fill="url(#tailG1)" stroke="#6B4420" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M102,194 L72,174 M102,198 L68,198 M102,202 L72,222" stroke="#8A5C2E" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <!-- dorsal fin: spiny front + soft rear -->
+    <path d="M348,142 L343,116 L337,140 L330,110 L323,140 L316,108 L309,140 L302,110 L295,140 L288,114
+             L283,138 C266,124 236,122 208,144 C203,148 200,150 198,151
+             C246,160 300,152 348,142 Z"
+          fill="url(#finG1)" stroke="#6B4420" stroke-width="2.3" stroke-linejoin="round"/>
+    <!-- anal fin -->
+    <path d="M244,252 L230,286 L216,256 Z" fill="url(#finG1)" stroke="#6B4420" stroke-width="2.3" stroke-linejoin="round"/>
+    <!-- pelvic fin -->
+    <path d="M404,246 L392,278 L380,250 Z" fill="url(#finG1)" stroke="#6B4420" stroke-width="2.3" stroke-linejoin="round"/>
+
+    <!-- main body (slim, elongated juvenile) -->
+    <path d="M572,204
+             C570,185 562,169 544,160
+             C498,146 428,142 334,142
+             C256,142 186,157 132,182
+             L117,193 L117,205 L132,217
+             C188,245 258,255 334,253
+             C418,251 486,237 526,221
+             C548,214 562,208 568,204
+             C570,205 571,205 572,204 Z"
+          fill="url(#bodyG1)" stroke="#6B4420" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- back countershade -->
+    <path d="M524,157 C474,146 404,140 334,140 C256,140 186,155 132,180 L146,189 C200,167 268,156 336,158 C404,160 466,166 508,174 Z"
+          fill="#835023" opacity="0.30"/>
+    <!-- lateral sheen -->
+    <path d="M156,198 C264,206 396,206 528,198 C396,212 264,212 156,198 Z" fill="#F4DDAF" opacity="0.4"/>
+
+    <!-- gill line -->
+    <path d="M510,160 C500,184 500,212 512,230" fill="none" stroke="#8A5C2E" stroke-width="2.2" opacity="0.65" stroke-linecap="round"/>
+    <!-- low subterminal mouth (set low on head, points slightly down) -->
+    <path d="M567,203 C559,208 551,209 545,208" fill="none" stroke="#6B4420" stroke-width="2.3" stroke-linecap="round"/>
+
+    <!-- eye (oversized for juvenile) -->
+    <circle cx="540" cy="184" r="14" fill="#FCF5E7" stroke="#6B4420" stroke-width="2"/>
+    <circle cx="540" cy="184" r="9.5" fill="#26160A"/>
+    <circle cx="536" cy="180" r="3" fill="#FFFFFF"/>
+
+    <!-- SIGNATURE OCELLUS -->
+    <circle cx="152" cy="182" r="17" fill="#FCF3E1" opacity="0.85"/>
+    <circle cx="152" cy="182" r="13" fill="#161311"/>
+  </g>
+
+  <!-- PECTORAL FIN -->
+  <g id="pecfin" data-pivot="498,210">
+    <path d="M498,210 C486,236 470,248 454,248 C461,230 472,216 488,208 Z"
+          fill="url(#finG1)" stroke="#6B4420" stroke-width="2.3" stroke-linejoin="round"/>
+    <path d="M492,214 L468,240 M490,218 L474,244" stroke="#8A5C2E" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

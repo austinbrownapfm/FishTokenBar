@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <clipPath id="bodyClipF">
+      <path d="M 525 200 C 505 190, 485 182, 468 181 C 420 174, 360 173, 315 176 C 285 178, 250 184, 228 190 L 228 214 C 252 220, 300 226, 350 227 C 410 228, 470 222, 500 214 C 515 210, 522 205, 525 200 Z"/>
+    </clipPath>
+    <linearGradient id="frySheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEF4F5"/>
+      <stop offset="0.5" stop-color="#DCE6E8"/>
+      <stop offset="1" stop-color="#F4F8F7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL ===================== -->
+  <g id="tail" data-pivot="230,200">
+    <path d="M 230 190 L 196 171 L 190 189 L 203 200 L 190 211 L 196 229 L 230 210 Z"
+          fill="#C4CFCE" stroke="#556561" stroke-width="2" stroke-linejoin="round" opacity="0.92"/>
+    <g stroke="#8C9C98" stroke-width="1" opacity="0.6">
+      <path d="M 226 194 L 198 178" fill="none"/>
+      <path d="M 224 200 L 196 200" fill="none"/>
+      <path d="M 226 206 L 198 222" fill="none"/>
+    </g>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- dorsal -->
+    <path d="M 372 175 C 366 150, 348 140, 330 145 C 335 157, 335 170, 328 175 Z"
+          fill="#AEBBAA" stroke="#556561" stroke-width="2" stroke-linejoin="round" opacity="0.95"/>
+
+    <!-- adipose fin (SALMONID SIGNATURE — present even in fry) -->
+    <path d="M 288 182 C 282 172, 268 171, 262 179 C 267 183, 279 184, 288 183 Z"
+          fill="#AEBBAA" stroke="#556561" stroke-width="1.8" stroke-linejoin="round" opacity="0.95"/>
+
+    <!-- pelvic + anal -->
+    <path d="M 348 226 C 340 240, 326 245, 318 243 C 328 234, 340 227, 350 224 Z"
+          fill="#C4CFCE" stroke="#556561" stroke-width="1.8" stroke-linejoin="round" opacity="0.9"/>
+    <path d="M 288 226 C 280 240, 266 245, 258 243 C 268 234, 280 227, 290 224 Z"
+          fill="#C4CFCE" stroke="#556561" stroke-width="1.8" stroke-linejoin="round" opacity="0.9"/>
+
+    <!-- body silhouette (tiny, slender, slightly translucent) -->
+    <path d="M 525 200 C 505 190, 485 182, 468 181 C 420 174, 360 173, 315 176 C 285 178, 250 184, 228 190 L 228 214 C 252 220, 300 226, 350 227 C 410 228, 470 222, 500 214 C 515 210, 522 205, 525 200 Z"
+          fill="url(#frySheen)" stroke="#556561" stroke-width="2.2" stroke-linejoin="round"/>
+
+    <!-- soft countershading -->
+    <g clip-path="url(#bodyClipF)">
+      <path d="M 200 150 L 560 150 L 560 196 C 500 192, 420 191, 340 192 C 290 193, 250 192, 200 192 Z"
+            fill="#9BA794" opacity="0.55"/>
+      <path d="M 200 270 L 560 270 L 560 216 C 500 221, 420 224, 340 225 C 290 226, 250 224, 200 220 Z"
+            fill="#F6FAF9" opacity="0.7"/>
+    </g>
+
+    <!-- faint parr marks -->
+    <g clip-path="url(#bodyClipF)" opacity="0.5">
+      <ellipse cx="258" cy="200" rx="5.5" ry="10" fill="#728697"/>
+      <ellipse cx="288" cy="200" rx="6" ry="11" fill="#728697"/>
+      <ellipse cx="320" cy="200" rx="6" ry="11.5" fill="#728697"/>
+      <ellipse cx="352" cy="200" rx="6" ry="11" fill="#728697"/>
+      <ellipse cx="384" cy="200" rx="5.5" ry="10" fill="#728697"/>
+      <ellipse cx="414" cy="200" rx="5" ry="9" fill="#728697"/>
+    </g>
+
+    <!-- faint pink wash along the side -->
+    <g clip-path="url(#bodyClipF)">
+      <path d="M 240 203 C 340 206, 430 205, 500 200 C 500 203, 500 205, 500 207 C 430 211, 340 212, 240 209 Z"
+            fill="#EF9BBE" opacity="0.3"/>
+    </g>
+
+    <!-- gill cover -->
+    <path d="M 476 184 C 471 197, 472 210, 482 220" fill="none" stroke="#5E6E68" stroke-width="1.5" opacity="0.45"/>
+
+    <!-- mouth -->
+    <path d="M 525 202 C 516 203, 510 204, 504 205" fill="none" stroke="#556561" stroke-width="1.6" stroke-linecap="round"/>
+
+    <!-- OVERSIZED eye -->
+    <circle cx="500" cy="197" r="14" fill="#EFEBD6" stroke="#556561" stroke-width="1.5"/>
+    <circle cx="500" cy="197" r="10.5" fill="#2A2E30"/>
+    <circle cx="500" cy="197" r="6" fill="#16181A"/>
+    <circle cx="496" cy="193" r="3" fill="#FFFFFF"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN ===================== -->
+  <g id="pecfin" data-pivot="452,206">
+    <path d="M 452 206 C 436 222, 416 231, 404 229 C 418 216, 436 206, 452 202 Z"
+          fill="#C4CFCE" stroke="#556561" stroke-width="1.8" stroke-linejoin="round" opacity="0.9"/>
+  </g>
+</svg>

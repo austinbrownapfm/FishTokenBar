@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyGS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#E4670F"/>
+      <stop offset="30%" stop-color="#F5891E"/>
+      <stop offset="50%" stop-color="#FBA531"/>
+      <stop offset="66%" stop-color="#FDC152"/>
+      <stop offset="84%" stop-color="#FEDE93"/>
+      <stop offset="100%" stop-color="#FFF7E4"/>
+    </linearGradient>
+    <linearGradient id="finGS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#EC7A14"/>
+      <stop offset="100%" stop-color="#FBBB52"/>
+    </linearGradient>
+    <linearGradient id="tailGS" x1="1" y1="0" x2="0" y2="0">
+      <stop offset="0%" stop-color="#EE7A12"/>
+      <stop offset="100%" stop-color="#FBB44C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- TAIL -->
+  <g id="tail" data-pivot="115,201">
+    <path d="M116,194 L44,148 C36,158 36,172 56,190 L68,201 L56,212 C36,230 36,244 44,254 L116,208 Z"
+          fill="url(#tailGS)" stroke="#9A4D06" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M98,196 L58,166 M98,201 L54,201 M98,206 L58,236" stroke="#C46A10" stroke-width="2.2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <!-- tall dorsal fin: spiny front + soft rear -->
+    <path d="M356,126 L350,94 L343,122 L335,90 L327,122 L319,88 L311,122 L303,90 L295,122 L287,94
+             L281,120 C258,100 220,98 182,132 C174,138 168,142 163,145
+             C228,158 298,144 356,126 Z"
+          fill="url(#finGS)" stroke="#9A4D06" stroke-width="2.6" stroke-linejoin="round"/>
+    <!-- anal fin -->
+    <path d="M236,276 L216,326 L198,280 L206,276 Z" fill="url(#finGS)" stroke="#9A4D06" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M268,280 C248,320 228,326 216,326 L236,276 Z" fill="url(#finGS)" stroke="#9A4D06" stroke-width="2.6" stroke-linejoin="round"/>
+    <!-- pelvic fin -->
+    <path d="M410,272 L394,318 L376,278 Z" fill="url(#finGS)" stroke="#9A4D06" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <!-- main body (elongate drum profile, heftier bull depth) -->
+    <path d="M575,192
+             C562,172 544,159 522,153
+             C472,140 400,126 330,124
+             C248,122 178,144 130,176
+             L114,194 L114,208 L130,228
+             C190,268 262,284 330,282
+             C420,280 492,258 530,236
+             C550,225 562,216 568,207
+             C572,203 574,198 575,192 Z"
+          fill="url(#bodyGS)" stroke="#9A4D06" stroke-width="3.2" stroke-linejoin="round"/>
+
+    <!-- back countershade (warm gold) -->
+    <path d="M522,153 C472,140 400,126 330,124 C248,122 178,144 130,176 L144,186 C200,159 272,147 342,149 C412,151 474,161 514,171 Z"
+          fill="#D9600C" opacity="0.30"/>
+    <!-- lateral sheen (bright gold) -->
+    <path d="M148,204 C260,214 402,214 542,204 C402,224 260,224 148,204 Z" fill="#FFEFBE" opacity="0.5"/>
+
+    <!-- gill cover line -->
+    <path d="M506,154 C495,184 495,220 510,240" fill="none" stroke="#C46A10" stroke-width="2.6" opacity="0.6" stroke-linecap="round"/>
+    <!-- low subterminal mouth -->
+    <path d="M574,200 C566,208 557,210 549,208" fill="none" stroke="#9A4D06" stroke-width="2.8" stroke-linecap="round"/>
+
+    <!-- eye (NORMAL dark eye — xanthic, not albino) -->
+    <circle cx="540" cy="176" r="12.5" fill="#FFF6E6" stroke="#9A4D06" stroke-width="2"/>
+    <circle cx="540" cy="176" r="8.5" fill="#1F1206"/>
+    <circle cx="536.3" cy="172.3" r="2.8" fill="#FFFFFF"/>
+
+    <!-- SIGNATURE OCELLI (melanin spots persist on xanthic morph) -->
+    <circle cx="150" cy="190" r="21" fill="#FFF3D6" opacity="0.85"/>
+    <circle cx="150" cy="190" r="16.5" fill="#141210"/>
+    <circle cx="194" cy="160" r="12" fill="#FFF3D6" opacity="0.8"/>
+    <circle cx="194" cy="160" r="8.5" fill="#161311"/>
+    <circle cx="176" cy="230" r="9" fill="#FFF3D6" opacity="0.8"/>
+    <circle cx="176" cy="230" r="6.2" fill="#161311"/>
+  </g>
+
+  <!-- PECTORAL FIN -->
+  <g id="pecfin" data-pivot="494,214">
+    <path d="M494,214 C480,248 460,264 440,264 C448,242 462,224 482,212 Z"
+          fill="url(#finGS)" stroke="#9A4D06" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M488,219 L456,254 M486,224 L466,258" stroke="#C46A10" stroke-width="1.7" fill="none" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>

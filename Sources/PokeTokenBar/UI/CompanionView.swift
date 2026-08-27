@@ -93,6 +93,10 @@ struct SpriteView: View {
     /// idle 배터리를 통제한다 — 항상 떠 있는 플로팅 펫(0.4s≈2.5fps)이 메뉴바 GIF 규율과 동치가 되게.
     /// 팝오버 등 일시적 표시는 0(기본)으로 두어 네이티브 fps 유지.
     var minFrameDelay: TimeInterval = 0
+    /// Which creature kingdom this sprite belongs to. `.fish` loads bundled local swim frames
+    /// (`FishSprites`) instead of the Pokémon remote-GIF path — the species-id namespace is
+    /// per-kingdom, so this also disambiguates otherwise-colliding ids (Pokémon #1 vs Fish #1).
+    var kingdom: Kingdom = .pokemon
     @State private var img: NSImage?
     @State private var up = false
     @State private var loadedID: Int?   // img 가 어느 speciesID 것인지(id 변경 시 갱신 판단)
@@ -102,16 +106,23 @@ struct SpriteView: View {
     @State private var frameIndex = 0
 
     init(speciesID: Int?, size: CGFloat = 84, bob: Bool = false, animated: Bool = false,
-         shiny: Bool = false, minFrameDelay: TimeInterval = 0) {
+         shiny: Bool = false, minFrameDelay: TimeInterval = 0, kingdom: Kingdom = .pokemon) {
         self.speciesID = speciesID
         self.size = size
         self.bob = bob
         self.animated = animated
         self.shiny = shiny
         self.minFrameDelay = minFrameDelay
+        self.kingdom = kingdom
         // 캐시에 있으면 즉시(동기) 표시 — 재렌더 플래시 방지 + 정적 스냅샷에서도 보임.
         // speciesID==nil(알 상태)이면 알 스프라이트를 시드(없으면 body 가 🥚 폴백).
-        let cached = speciesID.map { SpriteLoader.cachedImage(speciesID: $0, shiny: shiny) } ?? SpriteLoader.cachedEggImage()
+        // Fish load their first bundled swim frame synchronously (no network, no flash).
+        let cached: NSImage?
+        if kingdom == .fish, let id = speciesID {
+            cached = FishSprites.firstFrame(stageID: id, shiny: shiny)
+        } else {
+            cached = speciesID.map { SpriteLoader.cachedImage(speciesID: $0, shiny: shiny) } ?? SpriteLoader.cachedEggImage()
+        }
         _img = State(initialValue: cached)
         _loadedID = State(initialValue: (speciesID != nil && cached != nil) ? speciesID : nil)
         _loadedShiny = State(initialValue: shiny)
@@ -176,10 +187,34 @@ struct SpriteView: View {
         }
         // GIF 재생 중엔 bob 정지(프레임 자체가 움직임) — 폴백/정적일 때만 상하 움직임
         .offset(y: bob && frames.isEmpty && up ? -3 : 0)
-        .task(id: "\(speciesID.map(String.init) ?? "nil")-\(shiny)") {
+        .task(id: "\(kingdom.rawValue)-\(speciesID.map(String.init) ?? "nil")-\(shiny)") {
             // animated 프레임은 id/shiny 변경 시 항상 초기화(이전 개체 프레임 잔상 방지)
             frames = []
             frameIndex = 0
+            // Fish kingdom: bundled local swim frames feed the same frame-cycling loop as GIFs.
+            if kingdom == .fish {
+                guard let id = speciesID else {
+                    // Fish pre-hatch (roe) → 🥚 glyph for v1; fish never fetch the remote Pokémon egg.
+                    apply(subject.becomingEgg(cachedEgg: nil))
+                    return
+                }
+                let fishFrames = FishSprites.frames(stageID: id, shiny: shiny)
+                if let first = fishFrames.first,
+                   let next = subject.applyingLoad(first, for: id, cancelled: Task.isCancelled) {
+                    apply(next)
+                    loadedShiny = shiny
+                }
+                guard animated, fishFrames.count > 1 else { return }
+                frames = fishFrames.map { (image: $0, delay: FishSprites.frameDelay) }
+                while !Task.isCancelled {
+                    let delay = Self.frameDelay(base: FishSprites.frameDelay, floor: minFrameDelay)
+                    try? await Task.sleep(for: .seconds(delay),
+                                          tolerance: minFrameDelay > 0 ? .seconds(delay * 0.5) : .zero)
+                    if Task.isCancelled { break }
+                    frameIndex = (frameIndex + 1) % frames.count
+                }
+                return
+            }
             guard let id = speciesID else {
                 // 알 상태 — 정적 알 스프라이트 로드(애니메이션 알은 없음). 실패/오프라인이면 body 가 🥚 폴백.
                 // 종 → 알(졸업·새 알)이면 이전 개체 이미지를 버려야 한다 — img 는 뷰 identity 가 살아있는 동안
@@ -243,6 +278,7 @@ struct EvoLineView: View {
     let mysteryLabel: String
     var thumb: CGFloat = 40
     var shiny: Bool = false     // 개체가 shiny 면 라인 전체를 shiny 스프라이트로
+    var kingdom: Kingdom = .pokemon   // renders fish stage sprites when the active kingdom is Fish
     var names: [Int: String]? = nil   // 제공되면 각 스프라이트 밑에 작은 이름 라벨(도감 단계별 이름)
     /// 한 줄이 쓸 수 있는 가로 폭. 기본 .infinity = 제한 없음(스크롤 없이 나열).
     var maxWidth: CGFloat = .infinity
@@ -409,7 +445,7 @@ struct EvoLineView: View {
                     Group {
                         switch node.content {
                         case .species(let id):
-                            SpriteView(speciesID: id, size: thumb, shiny: shiny)
+                            SpriteView(speciesID: id, size: thumb, shiny: shiny, kingdom: kingdom)
                         case .mystery:
                             Text("?")
                                 .font(.system(size: thumb * 0.55, weight: .bold, design: .rounded))
@@ -463,7 +499,7 @@ struct CompanionHeader: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .center, spacing: 12) {
                 SpriteView(speciesID: store.currentSpeciesID, size: 76, bob: true, animated: true,
-                           shiny: store.currentIsShiny)
+                           shiny: store.currentIsShiny, kingdom: store.activeKingdom)
                     .frame(width: 76, height: 76)
                     .background(Color.secondary.opacity(0.06))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -557,7 +593,7 @@ struct CompanionHeader: View {
             if store.hasActive, !store.lineNodes.isEmpty {
                 // 폭을 안 주면 분기 라인(이브이)이 넘쳐 팝오버 콘텐츠 전체가 좌우로 잘린다.
                 EvoLineView(nodes: store.lineNodes, mysteryLabel: store.l.unknownNextEvolution, shiny: store.currentIsShiny,
-                            maxWidth: PopoverMetrics.contentWidth)
+                            kingdom: store.activeKingdom, maxWidth: PopoverMetrics.contentWidth)
             }
             if let g = store.justGraduated {
                 Text(store.l.graduated(g))
@@ -648,7 +684,9 @@ struct CompanionHeader: View {
         case .focus:   return l.statusFocus
         case .tired:   return l.statusTired
         case .sleep:   return l.statusSleep
-        case .levelUp: return store.justEvolvedTo.map { l.statusEvolved($0) } ?? l.statusGrew
+        case .levelUp: return store.justEvolvedTo.map {
+            store.activeKingdom == .fish ? l.statusGrewInto($0) : l.statusEvolved($0)
+        } ?? l.statusGrew
         }
     }
 }
@@ -983,7 +1021,7 @@ private struct DexSpeciesCell: View {
                 // 기본은 일반색. 이로치를 잡은 종은 선택하면 이로치색으로 바뀐다 —
                 // 일반·이로치를 둘 다 가진 종도 두 모습을 다 볼 수 있다(본가 HOME 의 이로치 토글과 같은 결).
                 SpriteView(speciesID: species.id, size: Self.thumb,
-                           shiny: species.isShiny && isSelected)
+                           shiny: species.isShiny && isSelected, kingdom: store.activeKingdom)
                     .frame(width: Self.thumb, height: Self.thumb)
                     // 표식은 스프라이트 아래가 아니라 위에 겹친다 — 별도 줄로 빼면 칸 높이가 넘친다.
                     // 이 줄은 번호·이로치와 폭을 다투지 않아 세 언어 모두 8pt 그대로 들어간다
@@ -1125,7 +1163,7 @@ private struct DexEntryRow: View {
             }
             EvoLineView(nodes: entry.chainOrder.map { EvoLineItem(.species($0), .done) },
                         mysteryLabel: store.l.unknownNextEvolution, thumb: 56,
-                        shiny: entry.isShiny, names: names,
+                        shiny: entry.isShiny, kingdom: store.activeKingdom, names: names,
                         maxWidth: PopoverMetrics.contentWidth - Self.cardPadding * 2)
             if let caughtAt = entry.caughtAt {
                 Text(caughtAt, style: .relative).font(.system(size: 9)).foregroundStyle(.tertiary)

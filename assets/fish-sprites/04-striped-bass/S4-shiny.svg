@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <title>Striped Bass S4 Cow Shiny (Piebald)</title>
+  <defs>
+    <linearGradient id="flankS4s" x1="0" y1="138" x2="0" y2="268" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#263540"/>
+      <stop offset="0.13" stop-color="#3b4d57"/>
+      <stop offset="0.30" stop-color="#788890"/>
+      <stop offset="0.50" stop-color="#bac6cb"/>
+      <stop offset="0.72" stop-color="#dde6e8"/>
+      <stop offset="1" stop-color="#f7fafb"/>
+    </linearGradient>
+    <linearGradient id="finMemS4s" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#849298"/>
+      <stop offset="1" stop-color="#c2ced2"/>
+    </linearGradient>
+    <radialGradient id="glowS4s" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fff2c9" stop-opacity="0.6"/>
+      <stop offset="0.55" stop-color="#ffe9a8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="bodyClipS4s">
+      <path d="M562,200 C540,172 508,156 472,150 C398,134 316,132 242,144 C186,153 152,166 124,178 C122,194 122,208 121,224 C152,240 188,254 244,262 C320,270 402,268 474,254 C508,247 540,228 562,200 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- TROPHY GLOW -->
+  <ellipse cx="330" cy="200" rx="300" ry="150" fill="url(#glowS4s)"/>
+
+  <!-- TAIL -->
+  <g id="tail" data-pivot="123,200">
+    <path d="M123,178 C98,167 62,148 40,136 C66,171 78,189 81,200 C78,211 66,229 40,264 C62,252 98,233 123,222 Z"
+          fill="url(#finMemS4s)" stroke="#171f24" stroke-width="2.8" stroke-linejoin="round"/>
+    <!-- piebald depigmented patch on lower tail lobe -->
+    <path d="M96,232 C78,240 62,250 50,258 C66,244 82,236 96,232 Z" fill="#f7faf8" opacity="0.95"/>
+    <path d="M110,184 C86,176 64,162 46,146" fill="none" stroke="#3d4d54" stroke-width="1.8"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <path d="M562,200 C540,172 508,156 472,150 C398,134 316,132 242,144 C186,153 152,166 124,178 C122,194 122,208 121,224 C152,240 188,254 244,262 C320,270 402,268 474,254 C508,247 540,228 562,200 Z"
+          fill="url(#flankS4s)" stroke="#171f24" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- spiny dorsal — triangular sail, ~7 spines -->
+    <path d="M465,138 L461,94 L457,124 L452,100 L448,125 L443,108 L439,127 L434,115 L430,128 L425,120 L421,130 L416,125 L412,131 L408,128 L403,138 Z"
+          fill="#4c5c5a" stroke="#171f24" stroke-width="2.3" stroke-linejoin="round"/>
+    <!-- soft dorsal (partly depigmented) — angular, straight top edge, soft rays -->
+    <path d="M382,139 L374,105 L312,124 L298,139 Z"
+          fill="#eef3f2" stroke="#171f24" stroke-width="2.3" stroke-linejoin="round"/>
+    <path d="M360,136 L358,118 M338,137 L337,127 M318,137 L317,130" fill="none" stroke="#171f24" stroke-width="1.3" opacity="0.45" stroke-linecap="round"/>
+
+    <!-- pelvic + anal -->
+    <path d="M452,260 C449,280 434,290 422,283 C431,270 438,264 452,260 Z"
+          fill="url(#finMemS4s)" stroke="#171f24" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M242,262 C233,284 206,289 184,280 C201,270 219,265 242,262 Z"
+          fill="#eef3f2" stroke="#171f24" stroke-width="2" stroke-linejoin="round"/>
+
+    <!-- HEAVY BOLD STRIPES (8) -->
+    <g clip-path="url(#bodyClipS4s)" stroke="#0a0a0a" stroke-width="5.6" stroke-linecap="butt" fill="none">
+      <path d="M142,155 L466,155"/>
+      <path d="M128,167 L484,167"/>
+      <path d="M123,178 L482,178"/>
+      <path d="M123,189 L484,189"/>
+      <path d="M123,199 L484,199"/>
+      <path d="M123,210 L482,210"/>
+      <path d="M124,221 L480,221"/>
+      <path d="M126,231 L476,231"/>
+    </g>
+
+    <!-- PIEBALD: irregular unpigmented white patches over the striped flank -->
+    <g clip-path="url(#bodyClipS4s)">
+      <path d="M258,150 C300,146 352,150 366,178 C356,214 320,238 276,244 C238,240 214,214 214,186 C222,162 236,152 258,150 Z"
+            fill="#f8fbf9" stroke="#dfe8e6" stroke-width="1.2"/>
+      <path d="M150,172 C176,166 196,176 200,192 C192,214 168,222 146,216 C132,204 132,182 150,172 Z"
+            fill="#f8fbf9" stroke="#dfe8e6" stroke-width="1.2"/>
+      <path d="M430,196 C452,192 470,200 470,214 C462,236 436,242 418,234 C408,220 414,204 430,196 Z"
+            fill="#f8fbf9" stroke="#dfe8e6" stroke-width="1.2"/>
+      <ellipse cx="392" cy="168" rx="16" ry="11" fill="#f8fbf9" stroke="#dfe8e6" stroke-width="1"/>
+      <ellipse cx="330" cy="252" rx="20" ry="10" fill="#f8fbf9" stroke="#dfe8e6" stroke-width="1"/>
+    </g>
+
+    <!-- gill cover -->
+    <path d="M484,151 C500,178 500,206 484,233" fill="none" stroke="#242f34" stroke-width="2.6"/>
+    <!-- mouth -->
+    <path d="M562,201 C550,206 540,207 530,206" fill="none" stroke="#171f24" stroke-width="2.3"/>
+    <!-- eye (pigmented — piebald, not albino) -->
+    <circle cx="524" cy="187" r="9" fill="#0a0f12" stroke="#e6edef" stroke-width="1.7"/>
+    <circle cx="520.5" cy="183.5" r="2.8" fill="#f2f7f8"/>
+  </g>
+
+  <!-- PECTORAL -->
+  <g id="pecfin" data-pivot="486,207">
+    <path d="M486,206 C474,228 452,246 432,244 C452,231 464,212 486,206 Z"
+          fill="url(#finMemS4s)" stroke="#171f24" stroke-width="2" stroke-linejoin="round" opacity="0.96"/>
+    <path d="M481,211 C466,224 454,234 440,240" fill="none" stroke="#455559" stroke-width="1.5"/>
+  </g>
+</svg>

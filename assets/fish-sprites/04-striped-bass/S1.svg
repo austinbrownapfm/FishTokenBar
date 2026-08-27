@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <title>Striped Bass S1 Juvenile</title>
+  <defs>
+    <linearGradient id="flankS1" x1="0" y1="160" x2="0" y2="236" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6b7a72"/>
+      <stop offset="0.18" stop-color="#8b9a99"/>
+      <stop offset="0.42" stop-color="#c9d1d4"/>
+      <stop offset="0.72" stop-color="#e8eef0"/>
+      <stop offset="1" stop-color="#f9fbfc"/>
+    </linearGradient>
+    <linearGradient id="finMemS1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#aab8bf"/>
+      <stop offset="1" stop-color="#d0dadd"/>
+    </linearGradient>
+    <clipPath id="bodyClipS1">
+      <path d="M556,203 C536,186 508,176 476,172 C408,164 322,162 252,168 C198,173 162,181 138,188 C137,197 137,203 136,212 C162,220 198,228 252,232 C322,237 408,235 476,227 C508,222 536,214 556,203 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- TAIL -->
+  <g id="tail" data-pivot="138,200">
+    <path d="M138,190 C118,182 92,170 74,161 C92,183 100,192 102,200 C100,208 92,218 74,239 C92,231 118,219 138,211 Z"
+          fill="url(#finMemS1)" stroke="#334149" stroke-width="2.3" stroke-linejoin="round"/>
+  </g>
+
+  <!-- BODY -->
+  <g id="body">
+    <path d="M556,203 C536,186 508,176 476,172 C408,164 322,162 252,168 C198,173 162,181 138,188 C137,197 137,203 136,212 C162,220 198,228 252,232 C322,237 408,235 476,227 C508,222 536,214 556,203 Z"
+          fill="url(#flankS1)" stroke="#334149" stroke-width="2.4" stroke-linejoin="round"/>
+
+    <!-- spiny dorsal (taller triangular sail, ~7 spines) -->
+    <path d="M459,160 L456,130 L452,149 L448,135 L444,150 L440,139 L436,151 L432,143 L428,152 L424,147 L420,153 L416,150 L412,155 L409,153 L406,160 Z"
+          fill="#7c8b8f" stroke="#334149" stroke-width="1.8" stroke-linejoin="round"/>
+    <!-- soft dorsal (angular, straight top edge, soft rays) -->
+    <path d="M392,161 L386,140 L336,150 L328,161 Z"
+          fill="url(#finMemS1)" stroke="#334149" stroke-width="1.8" stroke-linejoin="round"/>
+    <path d="M378,158 L376,146 M360,157 L358,149 M344,156 L343,152" fill="none" stroke="#334149" stroke-width="1.1" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- pelvic + anal (small) -->
+    <path d="M448,231 C445,244 436,250 428,246 C434,238 439,234 448,231 Z"
+          fill="url(#finMemS1)" stroke="#334149" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M250,232 C243,247 224,250 209,244 C221,237 234,234 250,232 Z"
+          fill="url(#finMemS1)" stroke="#334149" stroke-width="1.6" stroke-linejoin="round"/>
+
+    <!-- FAINT, INCOMPLETE / STILL-FORMING STRIPES -->
+    <g clip-path="url(#bodyClipS1)" stroke="#5c6c73" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7">
+      <path d="M150,178 L470,178" stroke-dasharray="40 16 26 20 60 12"/>
+      <path d="M146,188 L474,188" stroke-dasharray="30 22 50 14 34 18"/>
+      <path d="M145,197 L476,197" stroke-dasharray="70 10 40 24 30 16"/>
+      <path d="M146,206 L474,206" stroke-dasharray="34 18 60 12 40 20"/>
+      <path d="M150,215 L470,215" stroke-dasharray="24 26 44 16 54 14"/>
+    </g>
+
+    <!-- gill line -->
+    <path d="M480,175 C493,193 493,213 480,229" fill="none" stroke="#465861" stroke-width="2"/>
+    <!-- mouth -->
+    <path d="M556,204 C547,207 540,208 533,207" fill="none" stroke="#334149" stroke-width="1.8"/>
+    <!-- big juvenile eye -->
+    <circle cx="522" cy="191" r="10" fill="#111820" stroke="#eef3f4" stroke-width="1.6"/>
+    <circle cx="518.5" cy="187.5" r="3.1" fill="#f4f8f9"/>
+  </g>
+
+  <!-- PECTORAL -->
+  <g id="pecfin" data-pivot="480,206">
+    <path d="M480,205 C471,220 456,232 442,230 C456,220 465,209 480,205 Z"
+          fill="url(#finMemS1)" stroke="#334149" stroke-width="1.6" stroke-linejoin="round" opacity="0.95"/>
+  </g>
+</svg>

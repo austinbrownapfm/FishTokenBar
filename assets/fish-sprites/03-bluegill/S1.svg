@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8FA06C"/>
+      <stop offset="0.55" stop-color="#B7C48E"/>
+      <stop offset="1" stop-color="#E4E7C8"/>
+    </linearGradient>
+    <path id="bodyPath1" d="M 258 202
+      C 264 172, 290 156, 322 154
+      C 356 152, 386 166, 404 190
+      C 410 198, 410 203, 405 212
+      C 390 232, 360 244, 326 246
+      C 292 248, 266 236, 258 210
+      C 256 206, 256 205, 258 202 Z"/>
+    <clipPath id="bodyClip1"><use href="#bodyPath1"/></clipPath>
+  </defs>
+
+  <!-- tiny caudal fin -->
+  <g id="tail" data-pivot="260,203">
+    <path d="M 262 190
+      C 240 184, 224 178, 214 168
+      C 222 186, 228 198, 238 206
+      C 228 216, 222 228, 216 240
+      C 228 232, 246 224, 264 218
+      C 256 210, 256 198, 262 190 Z"
+      fill="#9DAE78" fill-opacity="0.85" stroke="#5D6B42" stroke-width="2.2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="body">
+    <!-- faint fin fold along back -->
+    <path d="M 296 158 C 320 146 350 150 372 168 C 348 158 320 158 300 164 Z"
+      fill="#A7B583" fill-opacity="0.7" stroke="#5D6B42" stroke-width="1.6"/>
+
+    <use href="#bodyPath1" fill="url(#bg1)" fill-opacity="0.92" stroke="#5D6B42" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <g clip-path="url(#bodyClip1)">
+      <g fill="#6E7C4C" fill-opacity="0.20">
+        <path d="M 292 156 C 290 190 292 226 302 246 L 312 246 C 302 226 300 190 302 156 Z"/>
+        <path d="M 322 154 C 320 190 322 228 332 248 L 342 248 C 332 228 330 190 332 154 Z"/>
+        <path d="M 352 156 C 352 190 354 224 362 242 L 372 240 C 364 224 362 190 362 158 Z"/>
+      </g>
+    </g>
+
+    <!-- tiny pale belly -->
+    <path d="M 280 232 C 320 250 360 244 396 214 C 366 236 326 240 296 232 Z"
+      fill="#EDEFD2" fill-opacity="0.6" clip-path="url(#bodyClip1)"/>
+
+    <!-- OVERSIZED EYE -->
+    <circle cx="374" cy="192" r="17" fill="#F2F0DC" stroke="#5D6B42" stroke-width="2.4"/>
+    <circle cx="374" cy="192" r="11" fill="#4A4230"/>
+    <circle cx="374" cy="192" r="6.5" fill="#141210"/>
+    <circle cx="378" cy="187" r="3" fill="#ffffff"/>
+
+    <!-- tiny mouth -->
+    <path d="M 405 200 C 398 203, 392 203, 388 202"
+      fill="none" stroke="#5D6B42" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- tiny pectoral -->
+  <g id="pecfin" data-pivot="352,214">
+    <path d="M 354 212 C 342 224, 336 240, 340 252 C 348 240, 358 224, 362 216 Z"
+      fill="#A7B583" fill-opacity="0.75" stroke="#5D6B42" stroke-width="1.8" stroke-linejoin="round"/>
+  </g>
+</svg>

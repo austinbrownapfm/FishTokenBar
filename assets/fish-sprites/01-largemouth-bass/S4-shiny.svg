@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="bodyGradSh" x1="0" y1="120" x2="0" y2="304" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b3801a"/>
+      <stop offset="0.40" stop-color="#d8a82c"/>
+      <stop offset="0.66" stop-color="#eecb57"/>
+      <stop offset="0.85" stop-color="#f7e293"/>
+      <stop offset="1" stop-color="#fdf3c6"/>
+    </linearGradient>
+    <linearGradient id="finGradSh" x1="0" y1="92" x2="0" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bd8a1c"/>
+      <stop offset="1" stop-color="#e6c256"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ===================== TAIL (caudal fin only) ===================== -->
+  <g id="tail" data-pivot="150,204">
+    <path d="M158,168
+             C114,148 82,142 62,146
+             C80,168 90,188 92,204
+             C90,220 80,242 62,262
+             C82,266 114,260 158,240
+             C148,216 148,192 158,168 Z"
+          fill="#cfa235" stroke="#8a6416" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M74,250 L86,244 L80,256 Z" fill="#fff6d2" opacity="0.6"/>
+    <path d="M148,174 C122,166 102,164 86,168 M148,196 C126,194 108,196 92,200
+             M148,214 C126,216 108,218 92,220 M148,236 C122,244 102,246 86,242"
+          fill="none" stroke="#a97e22" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===================== BODY ===================== -->
+  <g id="body">
+    <!-- soft dorsal fin -->
+    <path d="M260,142 C248,106 226,90 200,94 C192,110 190,132 200,148 Z"
+          fill="url(#finGradSh)" stroke="#8a6416" stroke-width="3" stroke-linejoin="round"/>
+    <!-- spiny dorsal fin -->
+    <path d="M268,146
+             L274,110 L286,122 L298,98 L310,116 L322,94 L334,114 L346,92
+             L358,112 L368,100 L372,138 Z"
+          fill="url(#finGradSh)" stroke="#8a6416" stroke-width="2.8" stroke-linejoin="round"/>
+    <path d="M280,132 L274,110 M298,130 L298,98 M322,128 L322,94 M346,126 L346,92 M368,128 L368,100"
+          fill="none" stroke="#a97e22" stroke-width="1.8" stroke-linecap="round" opacity="0.7"/>
+
+    <!-- anal fin -->
+    <path d="M180,252 C174,290 170,318 184,324 C196,314 206,282 216,256 Z"
+          fill="url(#finGradSh)" stroke="#8a6416" stroke-width="3" stroke-linejoin="round"/>
+    <!-- pelvic fin -->
+    <path d="M400,288 C394,314 390,328 402,330 C416,322 426,304 432,286 Z"
+          fill="#dcb648" stroke="#8a6416" stroke-width="2.6" stroke-linejoin="round"/>
+
+    <!-- main body -->
+    <path d="M582,180
+             C500,132 418,120 342,126
+             C266,132 196,146 150,166
+             L150,244
+             C205,268 264,298 344,302
+             C440,304 512,282 554,250
+             C564,242 570,228 576,212
+             Z"
+          fill="url(#bodyGradSh)" stroke="#8a6416" stroke-width="3.6" stroke-linejoin="round"/>
+
+    <!-- bright golden sheen along the back -->
+    <path d="M300,128 C380,124 470,132 560,178"
+          fill="none" stroke="#fff6cf" stroke-width="3.2" stroke-linecap="round" opacity="0.6"/>
+
+    <!-- faint coppery ghost of the lateral band (xanthic: markings mostly washed out) -->
+    <g fill="#9a6a20" opacity="0.32">
+      <path d="M160,210 L176,198 L190,206 L206,196 L226,205 L216,217 L198,211 L182,219 L166,214 Z"/>
+      <path d="M234,208 L252,196 L268,205 L288,194 L312,204 L304,218 L284,210 L264,217 L246,214 Z"/>
+      <path d="M320,208 L338,196 L356,205 L376,198 L396,207 L384,219 L366,212 L346,218 L328,215 Z"/>
+      <path d="M404,210 L422,202 L440,209 L460,203 L476,210 L464,221 L446,214 L428,219 L412,216 Z"/>
+    </g>
+
+    <!-- operculum edge -->
+    <path d="M486,142 C466,178 466,218 486,252" fill="none" stroke="#9a7018" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <path d="M502,146 C486,180 486,214 502,246" fill="none" stroke="#c79a2c" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+
+    <!-- LARGE MOUTH -->
+    <path d="M580,196 C560,208 536,216 508,218 C486,219 466,216 452,210
+             C468,205 496,199 524,194 C546,190 566,190 580,196 Z"
+          fill="#5a3a12" stroke="#4a2f0e" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M580,194 C550,197 518,200 490,202 C474,203 462,205 452,209"
+          fill="none" stroke="#5a3a12" stroke-width="3.4" stroke-linecap="round"/>
+    <path d="M580,200 C558,212 532,220 506,221 C480,222 462,218 452,211"
+          fill="none" stroke="#5a3a12" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M454,200 C450,206 450,214 455,220" fill="none" stroke="#9a7018" stroke-width="2.4" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- eye (NORMAL pigmented amber eye — xanthic, NOT albino) -->
+    <circle cx="512" cy="176" r="13" fill="#fdf3d0" stroke="#8a6416" stroke-width="2.4"/>
+    <circle cx="512" cy="176" r="9.5" fill="#b8871f"/>
+    <circle cx="512" cy="176" r="5.5" fill="#140f06"/>
+    <circle cx="514.8" cy="172.8" r="2.6" fill="#ffffff"/>
+  </g>
+
+  <!-- ===================== PECTORAL FIN ===================== -->
+  <g id="pecfin" data-pivot="452,212">
+    <path d="M452,212 C428,232 410,254 406,274 C424,272 444,258 460,232 C458,224 455,217 452,212 Z"
+          fill="#e0bc50" stroke="#8a6416" stroke-width="2.6" stroke-linejoin="round" opacity="0.96"/>
+    <path d="M448,222 C434,238 426,252 422,266 M452,222 C443,238 439,252 437,266"
+          fill="none" stroke="#b58e28" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
+  </g>
+</svg>
