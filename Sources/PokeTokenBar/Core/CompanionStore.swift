@@ -81,7 +81,7 @@ final class CompanionStore {
             dir = URL(fileURLWithPath: override, isDirectory: true)
         } else {
             dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-                .appendingPathComponent("PokeTokenBar")
+                .appendingPathComponent("FishTokenBar")   // own dir — must NOT share with PokeTokenBar
         }
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir.appendingPathComponent("companion-state.json")

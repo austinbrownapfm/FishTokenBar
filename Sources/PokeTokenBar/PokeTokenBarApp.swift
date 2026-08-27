@@ -356,7 +356,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSPopoverDelegate {
         let fm = FileManager.default
         let base = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         let old = base.appendingPathComponent("TokenMac")
-        let new = base.appendingPathComponent("PokeTokenBar")
+        let new = base.appendingPathComponent("FishTokenBar")
         guard fm.fileExists(atPath: old.path), !fm.fileExists(atPath: new.path) else { return }
         try? fm.moveItem(at: old, to: new)
     }
