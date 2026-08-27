@@ -77,6 +77,9 @@ final class FishCatalog: PokeProviding, @unchecked Sendable {
 
     // MARK: PokeProviding
 
+    // Fish have no Ditto (species #132) — never roll a disguise, or the reveal would fail forever.
+    var supportsDittoDisguise: Bool { false }
+
     func line(baseSpeciesID: Int) async throws -> EvoLine {
         guard let sp = byBaseID[baseSpeciesID] else { throw URLError(.fileDoesNotExist) }
         // Names: fish are English-only in the spec; rely on the same English fallback the app uses

@@ -14,6 +14,16 @@ protocol PokeProviding: Sendable {
     /// 단일 종이 base(진화 시작점)면 BaseSpecies, 아니면 nil.
     /// GraphQL 인덱스 엔드포인트 장애 시 REST(pokemon-species)로 부화 후보를 뽑는 폴백용.
     func baseSpecies(id: Int) async throws -> BaseSpecies?
+    /// Whether this kingdom supports the Ditto-disguise mechanic (a Pokémon-only Easter egg that
+    /// reveals as species #132 on first evolution). Kingdoms without a #132 (Fish, …) MUST return
+    /// false — otherwise a rolled disguise would try to fetch a species the catalog doesn't have and
+    /// the creature would be silently stuck at its first stage forever.
+    var supportsDittoDisguise: Bool { get }
+}
+
+extension PokeProviding {
+    // Default for the original Pokémon catalog; other kingdoms override to false.
+    var supportsDittoDisguise: Bool { true }
 }
 
 /// PokéAPI 클라이언트 — 종/진화체인을 런타임 fetch + 파싱. 포켓몬 데이터는 레포에 번들하지 않는다.

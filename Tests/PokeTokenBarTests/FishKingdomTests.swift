@@ -130,4 +130,25 @@ final class FishKingdomTests: XCTestCase {
         store.switchKingdom(to: .pokemon)
         XCTAssertEqual(store.activeKingdom, .pokemon)
     }
+
+    // MARK: Fish must NOT support the Ditto disguise — it has no species #132, so a rolled disguise
+    // would fail its reveal fetch forever and silently brick the fish at its first stage.
+    func testFishNeverSupportsDittoDisguise() {
+        XCTAssertFalse(FishCatalog().supportsDittoDisguise)
+        // The Pokémon catalog keeps it via the protocol default.
+        let pokeLine = EvoLine(baseID: 1, tree: EvoNode(speciesID: 1, children: []), rarity: .common, names: [:])
+        XCTAssertTrue(StubProvider(value: pokeLine).supportsDittoDisguise)
+    }
+
+    // MARK: The growth-line branch "next unknown" node is reachable for fish (Rainbow Trout branches)
+    // — its label must never say "evolve"/"진화" (locked honesty mandate, VoiceOver included).
+    @MainActor
+    func testFishBranchMysteryLabelNeverSaysEvolve() {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("ftb-\(UUID().uuidString).json")
+        let pokeLine = EvoLine(baseID: 1, tree: EvoNode(speciesID: 1, children: []), rarity: .common, names: [:])
+        let store = CompanionStore(provider: StubProvider(value: pokeLine), fileURL: url, rng: SeededRNG(seed: 1))
+        store.switchKingdom(to: .fish)
+        XCTAssertFalse(store.unknownNextLabel.lowercased().contains("evolv"))
+        XCTAssertFalse(store.unknownNextLabel.contains("진화"))
+    }
 }

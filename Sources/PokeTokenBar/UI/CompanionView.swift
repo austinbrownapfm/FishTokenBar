@@ -592,7 +592,7 @@ struct CompanionHeader: View {
             }
             if store.hasActive, !store.lineNodes.isEmpty {
                 // 폭을 안 주면 분기 라인(이브이)이 넘쳐 팝오버 콘텐츠 전체가 좌우로 잘린다.
-                EvoLineView(nodes: store.lineNodes, mysteryLabel: store.l.unknownNextEvolution, shiny: store.currentIsShiny,
+                EvoLineView(nodes: store.lineNodes, mysteryLabel: store.unknownNextLabel, shiny: store.currentIsShiny,
                             kingdom: store.activeKingdom, maxWidth: PopoverMetrics.contentWidth)
             }
             if let g = store.justGraduated {
@@ -1162,7 +1162,7 @@ private struct DexEntryRow: View {
                 }
             }
             EvoLineView(nodes: entry.chainOrder.map { EvoLineItem(.species($0), .done) },
-                        mysteryLabel: store.l.unknownNextEvolution, thumb: 56,
+                        mysteryLabel: store.unknownNextLabel, thumb: 56,
                         shiny: entry.isShiny, kingdom: store.activeKingdom, names: names,
                         maxWidth: PopoverMetrics.contentWidth - Self.cardPadding * 2)
             if let caughtAt = entry.caughtAt {

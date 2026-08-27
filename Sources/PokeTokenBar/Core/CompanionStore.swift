@@ -136,6 +136,12 @@ final class CompanionStore {
     /// sprites so the home companion and dex grid follow the active mode.
     var activeKingdom: Kingdom { state.activeKingdom }
 
+    /// Label for the growth-line "next is unknown" branch node. Honesty-aware: fish grow through
+    /// life stages and must never say "evolution" (Rainbow Trout branches, so this is reachable).
+    var unknownNextLabel: String {
+        state.activeKingdom == .fish ? l.unknownNextStage : l.unknownNextEvolution
+    }
+
     /// 관련 상태가 바뀌어 저장되는 경계에서만 갱신한다. 고정 종 하나의 이로치 여부만 조회하므로
     /// 이름 해석·정렬을 포함한 `dexSpecies` 계산을 메뉴바/플로팅 펫 렌더마다 반복하지 않는다.
     private func refreshRepresentativeSubject() {
@@ -179,8 +185,10 @@ final class CompanionStore {
         guard let a = state.active else { return "" }
         // Fish show their real life-stage label ("Fingerling", "Lunker") — more informative and
         // honest than a generic "Stage n". Pokémon keep the stage counter / "Final form".
-        if state.activeKingdom == .fish, let label = FishCatalog.shared.stageInfo(id: a.currentID)?.label {
-            return label
+        if state.activeKingdom == .fish {
+            // Always honesty-safe — never fall through to the Pokémon "evolution" strings, even if a
+            // drifted/hand-edited save has a currentID with no catalog stage.
+            return FishCatalog.shared.stageInfo(id: a.currentID)?.label ?? l.trophyForm
         }
         return isFinalStage ? l.finalForm : l.stage(a.stageIndex + 1, a.totalForms)
     }
@@ -960,7 +968,9 @@ final class CompanionStore {
         guard let line = try? await provider.line(baseSpeciesID: id) else { return }   // 라인 예열
         // 스프라이트 예열 — 부화 직후 보일 것들: base 정적+애니메이션, shiny 롤(1/64) 대비 shiny 애니메이션.
         // .app 번들에서만(단위 테스트가 실네트워크에 닿지 않도록 — 알림과 동일한 게이트).
-        if AppEnv.isBundledApp {
+        // Pokémon only — fish render from bundled `FishSprites`, so warming the PokéAPI GitHub CDN
+        // for a fish id (which happens to be a valid Pokémon id) is pure wasted network/battery.
+        if AppEnv.isBundledApp, state.activeKingdom == .pokemon {
             _ = await SpriteStore.shared.data(speciesID: line.baseID, animated: false, shiny: false)
             _ = await SpriteStore.shared.data(speciesID: line.baseID, animated: true, shiny: false)
             _ = await SpriteStore.shared.data(speciesID: line.baseID, animated: true, shiny: true)
@@ -1023,7 +1033,7 @@ final class CompanionStore {
         // 메타몽 위장 롤 — common·≥2형태에 한해 1/128. .app 게이트(&& 단락 → 비앱에선 rng 미소비로
         // 기존 테스트 RNG 시퀀스 무영향). 위장/리빌 로직은 상태 기반으로 별도 테스트한다.
         var dittoDisguise: Int?
-        if dittoDisguiseRollingEnabled,
+        if dittoDisguiseRollingEnabled, provider.supportsDittoDisguise,
            Self.dittoDisguiseHit(rarity: line.rarity, totalForms: line.totalForms, roll: rng.next()) {
             dittoDisguise = line.baseID
         }
